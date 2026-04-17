@@ -8,7 +8,7 @@ export default function ServiceDetail() {
 
   const [showPopup, setShowPopup] = useState(false)
 
-  // ✅ CTA PER SERVICE
+  // CTA PER SERVICE
   const getCTA = () => {
     switch (service?.slug) {
       case "nabh":
@@ -30,7 +30,7 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
-  // ✅ DYNAMIC INTERNAL LINKING (FIXED)
+  // DYNAMIC INTERNAL LINKING
   const getInternalLinkingText = () => {
     switch (service?.slug) {
       case "nabh":
@@ -46,11 +46,10 @@ Please guide me on next steps.`
             </Link>.
           </p>
         )
-
       case "operations":
         return (
           <p className="text-gray-400 text-sm">
-            Strong operations not only improve efficiency but also prepare your hospital for{" "}
+            Strong operations also prepare your hospital for{" "}
             <Link to="/services/nabh" className="text-gold underline">
               NABH compliance
             </Link>{" "}
@@ -60,11 +59,10 @@ Please guide me on next steps.`
             </Link>.
           </p>
         )
-
       case "growth":
         return (
           <p className="text-gray-400 text-sm">
-            Growth is not just marketing — it depends on{" "}
+            Growth depends on{" "}
             <Link to="/services/operations" className="text-gold underline">
               operational efficiency
             </Link>{" "}
@@ -74,27 +72,25 @@ Please guide me on next steps.`
             </Link>.
           </p>
         )
-
       case "recruitment":
         return (
           <p className="text-gray-400 text-sm">
-            Hiring the right team directly impacts your{" "}
+            Hiring impacts your{" "}
             <Link to="/services/operations" className="text-gold underline">
               daily operations
             </Link>{" "}
-            and plays a critical role in achieving{" "}
+            and your ability to meet{" "}
             <Link to="/services/nabh" className="text-gold underline">
               NABH standards
             </Link>.
           </p>
         )
-
       default:
         return null
     }
   }
 
-  // 🔥 EXIT INTENT SYSTEM (IMPROVED)
+  // EXIT INTENT
   useEffect(() => {
     let hasTriggered = false
 
@@ -148,143 +144,157 @@ Please guide me on next steps.`
 
   return (
     <div className="bg-black text-white pt-28 pb-32 px-4 md:px-6">
-      <div className="max-w-5xl mx-auto space-y-16">
 
-        {/* HERO */}
-        <div className="space-y-6">
-          <p className="text-sm text-gold uppercase">{service.title}</p>
+      {/* 🔥 GRID LAYOUT */}
+      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
 
-          <h1 className="text-4xl md:text-5xl font-bold">
-            {service.title}
-          </h1>
+        {/* ================= LEFT CONTENT ================= */}
+        <div className="md:col-span-2 space-y-16">
 
-          <p className="text-gray-400 max-w-2xl">
-            {service.subtitle}
-          </p>
+          {/* HERO */}
+          <div className="space-y-6">
+            <p className="text-sm text-gold uppercase">{service.title}</p>
 
-          {/* ✅ DYNAMIC LINKING */}
-          {getInternalLinkingText()}
+            <h1 className="text-4xl md:text-5xl font-bold">
+              {service.title}
+            </h1>
 
-          <Link
-            to={`/contact?service=${service.slug}`}
-            className="bg-gold text-black px-8 py-3 rounded-lg font-medium inline-block"
-          >
-            {ctaText} →
-          </Link>
+            <p className="text-gray-400 max-w-2xl">
+              {service.subtitle}
+            </p>
+
+            {getInternalLinkingText()}
+
+            <Link
+              to={`/contact?service=${service.slug}`}
+              className="bg-gold text-black px-8 py-3 rounded-lg font-medium inline-block"
+            >
+              {ctaText} →
+            </Link>
+          </div>
+
+          {/* PROBLEMS */}
+          {service.problems?.length > 0 && (
+            <div>
+              <h2 className="text-2xl text-gold mb-4">Common Challenges</h2>
+              <ul className="space-y-2 text-gray-300">
+                {service.problems.map((p, i) => (
+                  <li key={i}>• {p}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* PROCESS */}
+          {service.process?.length > 0 && (
+            <div>
+              <h2 className="text-2xl text-gold mb-4">Our Approach</h2>
+              <ul className="space-y-2 text-gray-300">
+                {service.process.map((p, i) => (
+                  <li key={i}>• {p}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* OUTCOMES */}
+          {service.outcomes?.length > 0 && (
+            <div>
+              <h2 className="text-2xl text-gold mb-4">Expected Outcomes</h2>
+              <ul className="space-y-2 text-gray-300">
+                {service.outcomes.map((o, i) => (
+                  <li key={i}>• {o}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* IDEAL CLIENT */}
+          {service.idealFor?.length > 0 && (
+            <div>
+              <h2 className="text-2xl text-gold mb-4">Who This Is For</h2>
+              <ul className="space-y-2 text-gray-300">
+                {service.idealFor.map((iF, i) => (
+                  <li key={i}>• {iF}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* AUTHORITY */}
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            {commonBlocks.credibility.authority.map((item, i) => (
+              <div key={i} className="border border-gold/20 p-6 rounded-xl">
+                <p className="text-3xl text-gold font-bold">{item.value}</p>
+                <p className="text-gray-400 text-sm">{item.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* RELATED */}
+          {relatedServices.length > 0 && (
+            <div>
+              <h2 className="text-2xl text-gold mb-6">Related Services</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {relatedServices.map((rs) => (
+                  <Link
+                    key={rs.slug}
+                    to={`/services/${rs.slug}`}
+                    className="border border-gold/20 p-6 rounded-xl hover:border-gold/40"
+                  >
+                    <h3 className="text-gold font-semibold">{rs.title}</h3>
+                    <p className="text-gray-400 text-sm mt-2">{rs.subtitle}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* CTA */}
+          <div className="text-center">
+            <Link
+              to={`/contact?service=${service.slug}`}
+              className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
+            >
+              {ctaText} →
+            </Link>
+          </div>
+
         </div>
 
-        {/* PROBLEMS */}
-        {service.problems?.length > 0 && (
-          <div>
-            <h2 className="text-2xl text-gold mb-4">Common Challenges</h2>
-            <ul className="space-y-2 text-gray-300">
-              {service.problems.map((p, i) => (
-                <li key={i}>• {p}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* PROCESS */}
-        {service.process?.length > 0 && (
-          <div>
-            <h2 className="text-2xl text-gold mb-4">Our Approach</h2>
-            <ul className="space-y-2 text-gray-300">
-              {service.process.map((p, i) => (
-                <li key={i}>• {p}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* OUTCOMES */}
-        {service.outcomes?.length > 0 && (
-          <div>
-            <h2 className="text-2xl text-gold mb-4">Expected Outcomes</h2>
-            <ul className="space-y-2 text-gray-300">
-              {service.outcomes.map((o, i) => (
-                <li key={i}>• {o}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* IDEAL CLIENT */}
-        {service.idealFor?.length > 0 && (
-          <div>
-            <h2 className="text-2xl text-gold mb-4">Who This Is For</h2>
-            <ul className="space-y-2 text-gray-300">
-              {service.idealFor.map((iF, i) => (
-                <li key={i}>• {iF}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* FAQ */}
+        {/* ================= RIGHT STICKY FAQ ================= */}
         {service.faqs?.length > 0 && (
-          <div>
-            <h2 className="text-2xl text-gold mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
+          <div className="hidden md:block md:col-span-1">
+
+            <div className="sticky top-28 space-y-4 border border-gold/20 p-6 rounded-xl bg-zinc-900">
+
+              <h2 className="text-lg text-gold font-semibold">
+                Quick Answers
+              </h2>
+
               {service.faqs.map((faq, i) => (
-                <div key={i} className="border border-gold/20 p-4 rounded-lg">
-                  <p className="font-semibold text-gold">{faq.q}</p>
-                  <p className="text-gray-400 text-sm mt-2">{faq.a}</p>
+                <div key={i} className="border-b border-gold/10 pb-3">
+                  <p className="text-sm text-gold font-medium">
+                    {faq.q}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {faq.a}
+                  </p>
                 </div>
               ))}
+
+              <Link
+                to={`/contact?service=${service.slug}`}
+                className="block text-center bg-gold text-black py-2 rounded-lg text-sm mt-4"
+              >
+                {ctaText}
+              </Link>
+
             </div>
+
           </div>
         )}
 
-        {/* AUTHORITY */}
-        <div className="grid md:grid-cols-3 gap-6 text-center">
-          {commonBlocks.credibility.authority.map((item, i) => (
-            <div key={i} className="border border-gold/20 p-6 rounded-xl">
-              <p className="text-3xl text-gold font-bold">{item.value}</p>
-              <p className="text-gray-400 text-sm">{item.label}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* RELATED */}
-        {relatedServices.length > 0 && (
-          <div>
-            <h2 className="text-2xl text-gold mb-6">Related Services</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {relatedServices.map((rs) => (
-                <Link
-                  key={rs.slug}
-                  to={`/services/${rs.slug}`}
-                  className="border border-gold/20 p-6 rounded-xl hover:border-gold/40"
-                >
-                  <h3 className="text-gold font-semibold">{rs.title}</h3>
-                  <p className="text-gray-400 text-sm mt-2">{rs.subtitle}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* CTA */}
-        <div className="text-center">
-          <Link
-            to={`/contact?service=${service.slug}`}
-            className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
-          >
-            {ctaText} →
-          </Link>
-        </div>
-      </div>
-
-      {/* STICKY CTA */}
-      <div className="fixed bottom-0 left-0 w-full bg-black border-t border-gold/20 p-4 flex justify-between items-center z-50">
-        <p className="text-sm text-gray-300">Need help?</p>
-        <Link
-          to={`/contact?service=${service.slug}`}
-          className="bg-gold text-black px-4 py-2 rounded-lg text-sm"
-        >
-          {ctaText}
-        </Link>
       </div>
 
       {/* WHATSAPP */}
@@ -298,7 +308,7 @@ Please guide me on next steps.`
 
       {/* EXIT POPUP */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[999] px-4">
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999] px-4">
           <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
 
             <button
@@ -313,12 +323,7 @@ Please guide me on next steps.`
             </h2>
 
             <p className="text-gray-300 text-sm">
-              Most hospitals don’t fail due to lack of effort —
-              they fail due to lack of structured systems.
-            </p>
-
-            <p className="text-gray-400 text-sm">
-              Let’s fix your <span className="text-gold">{service.title}</span>
+              Let’s quickly identify what’s holding your hospital back.
             </p>
 
             <div className="space-y-3">
@@ -326,27 +331,23 @@ Please guide me on next steps.`
               <a
                 href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
                 target="_blank"
-                className="bg-green-500 block py-3 rounded-lg font-medium"
+                className="bg-green-500 block py-3 rounded-lg"
               >
-                💬 WhatsApp (Fastest)
+                💬 WhatsApp
               </a>
 
               <a href="tel:+918330016037" className="bg-blue-500 block py-3 rounded-lg">
-                📞 Call Now
+                📞 Call
               </a>
 
               <Link
                 to={`/contact?service=${service.slug}`}
-                className="bg-gold text-black block py-3 rounded-lg font-semibold"
+                className="bg-gold text-black block py-3 rounded-lg"
               >
                 📋 Get Action Plan
               </Link>
 
             </div>
-
-            <p className="text-gray-500 text-xs">
-              No spam. Just clarity.
-            </p>
 
           </div>
         </div>
