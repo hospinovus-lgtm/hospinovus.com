@@ -91,7 +91,7 @@ Please guide me on next steps.`
     }
   }
 
-  // EXIT INTENT (FIXED CLEANUP)
+  // EXIT INTENT
   useEffect(() => {
     let triggered = false
 
@@ -145,7 +145,7 @@ Please guide me on next steps.`
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
 
-        {/* LEFT CONTENT */}
+        {/* LEFT */}
         <div className="md:col-span-2 space-y-16">
 
           {/* HERO */}
@@ -171,25 +171,11 @@ Please guide me on next steps.`
             </Link>
           </div>
 
-          {/* PROBLEMS */}
-          {service.problems?.length > 0 && (
-            <Section title="Common Challenges" data={service.problems} />
-          )}
-
-          {/* PROCESS */}
-          {service.process?.length > 0 && (
-            <Section title="Our Approach" data={service.process} />
-          )}
-
-          {/* OUTCOMES */}
-          {service.outcomes?.length > 0 && (
-            <Section title="Expected Outcomes" data={service.outcomes} />
-          )}
-
-          {/* IDEAL */}
-          {service.idealFor?.length > 0 && (
-            <Section title="Who This Is For" data={service.idealFor} />
-          )}
+          {/* SECTIONS */}
+          <Section title="Common Challenges" data={service.problems} />
+          <Section title="Our Approach" data={service.process} />
+          <Section title="Expected Outcomes" data={service.outcomes} />
+          <Section title="Who This Is For" data={service.idealFor} />
 
           {/* AUTHORITY */}
           <div className="grid md:grid-cols-3 gap-6 text-center">
@@ -266,44 +252,81 @@ Please guide me on next steps.`
       {/* WHATSAPP FLOAT */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+        onClick={() => track("WhatsApp Click", { service: service.slug })}
         target="_blank"
         className="fixed bottom-24 right-5 bg-green-500 p-4 rounded-full z-50"
       >
         💬
       </a>
 
-      {/* EXIT POPUP (FULL FIXED) */}
+      {/* 🔥 HIGH-CONVERSION EXIT POPUP */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999]">
-          <div className="bg-zinc-900 p-8 rounded-xl space-y-4 text-center relative">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[999] px-4">
+          <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
 
             <button
               onClick={() => setShowPopup(false)}
-              className="absolute top-2 right-3"
+              className="absolute top-3 right-4 text-gray-400"
             >
               ✕
             </button>
 
-            <h2 className="text-gold text-xl font-bold">
-              Before You Leave...
+            <h2 className="text-2xl font-bold text-gold">
+              Your Hospital Is Losing Efficiency Daily
             </h2>
 
-            <p className="text-gray-400 text-sm">
-              Let’s quickly identify what’s slowing your hospital.
+            <p className="text-gray-300 text-sm">
+              Delays, compliance gaps, and workflow issues silently reduce revenue.
             </p>
+
+            <div className="bg-black border border-gold/10 rounded-lg p-4 text-left text-sm text-gray-300">
+              <p>✔ Identify operational gaps</p>
+              <p>✔ Detect NABH readiness issues</p>
+              <p>✔ Get clear action steps</p>
+            </div>
 
             <div className="space-y-3">
 
-              <a href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`} className="bg-green-500 block py-2 rounded-lg">
-                WhatsApp
+              <a
+                href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+                onClick={() =>
+                  track("Exit WhatsApp Click", { service: service.slug })
+                }
+                className="bg-green-500 block py-3 rounded-lg"
+              >
+                💬 WhatsApp (Fastest)
               </a>
 
-              <a href="tel:+918330016037" className="bg-blue-500 block py-2 rounded-lg">
-                Call
+              <a
+                href="tel:+918330016037"
+                onClick={() =>
+                  track("Exit Call Click", { service: service.slug })
+                }
+                className="bg-blue-500 block py-3 rounded-lg"
+              >
+                📞 Call
               </a>
 
-              <Link to={`/contact?service=${service.slug}`} className="bg-gold text-black block py-2 rounded-lg">
-                Get Action Plan
+              <a
+                href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(
+                  `Hospital Assessment - ${service.title}`
+                )}`}
+                onClick={() =>
+                  track("Exit Email Click", { service: service.slug })
+                }
+                className="bg-gray-700 block py-3 rounded-lg"
+              >
+                ✉ Email Proposal
+              </a>
+
+              <Link
+                to={`/contact?service=${service.slug}`}
+                onClick={() =>
+                  track("Exit CTA Click", { service: service.slug })
+                }
+                className="bg-gold text-black block py-3 rounded-lg"
+              >
+                📋 Get Action Plan
               </Link>
 
             </div>
