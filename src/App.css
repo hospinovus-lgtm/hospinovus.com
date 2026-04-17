@@ -181,4 +181,16 @@
     right: 0;
     border-right-color: var(--border);
   }
+  #nprogress .bar {
+  background: #FFD700 !important; /* gold */
+  height: 3px;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #FFD700, 0 0 5px #FFD700;
+}
+
+#nprogress .spinner {
+  display: none;
+}
 }
