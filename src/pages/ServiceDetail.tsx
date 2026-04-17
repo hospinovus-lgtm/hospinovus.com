@@ -90,7 +90,63 @@ export default function ServiceDetail() {
             </div>
           </div>
         )}
+{/* AUTHORITY STRIP */}
+<div className="grid md:grid-cols-3 gap-6 text-center">
+  <div className="border border-gold/20 p-6 rounded-xl">
+    <p className="text-3xl font-bold text-gold">10+</p>
+    <p className="text-gray-400 text-sm mt-2">
+      Years Combined Experience
+    </p>
+  </div>
 
+  <div className="border border-gold/20 p-6 rounded-xl">
+    <p className="text-3xl font-bold text-gold">50+</p>
+    <p className="text-gray-400 text-sm mt-2">
+      Healthcare Professionals Network
+    </p>
+  </div>
+
+  <div className="border border-gold/20 p-6 rounded-xl">
+    <p className="text-3xl font-bold text-gold">100%</p>
+    <p className="text-gray-400 text-sm mt-2">
+      Structured Execution Approach
+    </p>
+  </div>
+</div>
+
+
+{/* WHY CHOOSE US */}
+<div>
+  <h2 className="text-2xl text-gold mb-4">
+    Why Hospitals Choose HOSPINOVUS
+  </h2>
+
+  <ul className="space-y-3 text-gray-300">
+    <li>• We don’t just consult — we execute on-ground</li>
+    <li>• Department-wise implementation support</li>
+    <li>• Real audit preparation, not theoretical advice</li>
+    <li>• Focus on long-term operational stability</li>
+  </ul>
+</div>
+
+
+{/* URGENCY BLOCK */}
+<div className="border border-gold/20 p-6 rounded-xl text-center bg-gradient-to-br from-black to-[#1a1a1a]">
+  <p className="text-lg text-gray-300 mb-4">
+    Planning NABH accreditation in the next 3–6 months?
+  </p>
+
+  <p className="text-gray-400 mb-6 text-sm">
+    Start with a structured gap analysis and avoid costly delays during audits.
+  </p>
+
+  <Link
+    to={`/contact?service=${service.slug}`}
+    className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
+  >
+    Book NABH Readiness Assessment →
+  </Link>
+</div>
         {/* CTA */}
         <div className="text-center">
           <Link
