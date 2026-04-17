@@ -7,20 +7,17 @@ I would like to improve my hospital operations. Please guide me.`
   return (
     <footer className="bg-black border-t border-gold/20 mt-20">
 
-      {/* 🔥 FINAL CTA SECTION */}
+      {/* 🔥 FINAL CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-16 text-center space-y-6">
-
         <h2 className="text-3xl md:text-4xl font-bold text-white">
           Ready to Fix Your Hospital Systems?
         </h2>
 
         <p className="text-gray-400 max-w-2xl mx-auto">
-          Whether it's NABH, operations, growth, or staffing — we help you execute,
-          not just advise.
+          Whether it's NABH, operations, growth, or staffing — we step in and execute, not just advise.
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
-
           <Link
             to="/contact"
             className="bg-gold text-black px-6 py-3 rounded-lg font-semibold"
@@ -35,24 +32,40 @@ I would like to improve my hospital operations. Please guide me.`
           >
             WhatsApp Now
           </a>
-
         </div>
-
       </div>
 
-      {/* 🔥 LINKS + INFO */}
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-10 grid md:grid-cols-3 gap-10 text-sm">
+      {/* 🔥 MAIN FOOTER */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 grid md:grid-cols-4 gap-10 text-sm">
 
         {/* BRAND */}
         <div>
-          <h3 className="text-gold font-semibold mb-3">HOSPINOVUS</h3>
+          <div className="flex items-center gap-3 mb-4">
+            <img src="/logo.png" className="w-10 h-10" />
+            <div>
+              <p className="text-gold font-semibold text-sm">HOSPINOVUS</p>
+              <p className="text-[10px] text-gray-400">YOU OWN WE MANAGE</p>
+            </div>
+          </div>
+
           <p className="text-gray-400">
             Healthcare management partner helping hospitals achieve compliance,
-            efficiency, and growth through structured execution.
+            operational efficiency, and scalable growth.
           </p>
         </div>
 
-        {/* SERVICES */}
+        {/* 🔥 QUICK LINKS */}
+        <div>
+          <h3 className="text-gold font-semibold mb-3">Quick Links</h3>
+          <div className="space-y-2 text-gray-400">
+            <Link to="/" className="block hover:text-gold">Home</Link>
+            <Link to="/about" className="block hover:text-gold">About Us</Link>
+            <Link to="/services" className="block hover:text-gold">Services</Link>
+            <Link to="/contact" className="block hover:text-gold">Contact</Link>
+          </div>
+        </div>
+
+        {/* 🔥 SERVICES */}
         <div>
           <h3 className="text-gold font-semibold mb-3">Services</h3>
           <div className="space-y-2 text-gray-400">
@@ -63,16 +76,23 @@ I would like to improve my hospital operations. Please guide me.`
           </div>
         </div>
 
-        {/* CONTACT */}
+        {/* 🔥 CONTACT */}
         <div>
           <h3 className="text-gold font-semibold mb-3">Contact</h3>
           <div className="space-y-2 text-gray-400">
+
             <a href="tel:+918330016037" className="block hover:text-gold">
               📞 +91 83300 16037
             </a>
+
+            <a href="tel:+917594825179" className="block hover:text-gold">
+              📞 +91 75948 25179
+            </a>
+
             <a href="mailto:hospinovus@gmail.com" className="block hover:text-gold">
               ✉ hospinovus@gmail.com
             </a>
+
             <a
               href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
               target="_blank"
@@ -80,13 +100,14 @@ I would like to improve my hospital operations. Please guide me.`
             >
               💬 WhatsApp Chat
             </a>
+
           </div>
         </div>
 
       </div>
 
       {/* 🔥 BOTTOM STRIP */}
-      <div className="text-center text-gray-500 text-xs pb-6">
+      <div className="text-center text-gray-500 text-xs pb-6 border-t border-gold/10 pt-4">
         © {new Date().getFullYear()} HOSPINOVUS. All rights reserved.
       </div>
 
