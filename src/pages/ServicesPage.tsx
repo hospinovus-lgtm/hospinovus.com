@@ -13,20 +13,19 @@ export default function ServicesPage() {
             Healthcare Consulting Services
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            We partner with hospitals to improve operations, achieve accreditation, and scale sustainably — with real execution, not just advice.
+            We don’t just advise — we execute and transform hospital operations.
           </p>
         </div>
 
-        {/* SERVICES */}
-        <div className="space-y-10">
+        {/* SERVICES LIST */}
+        <div className="space-y-12">
 
-          {servicesData.map((service, index) => (
+          {servicesData.map((service) => (
             <motion.div
               key={service.slug}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="border border-gold/20 rounded-xl p-6"
             >
 
               {/* TITLE */}
@@ -34,49 +33,36 @@ export default function ServicesPage() {
                 {service.title}
               </h2>
 
-              {/* DESCRIPTION */}
+              {/* SUBTITLE (REPLACED description) */}
               <p className="text-gray-400 mb-4">
-                {service.description}
+                {service.subtitle}
               </p>
 
-              {/* DETAILS */}
+              {/* PROCESS (REPLACED details) */}
               <ul className="text-gray-300 space-y-2 mb-6">
-                {service.details.map((item, i) => (
+                {service.process.map((item: string, i: number) => (
                   <li key={i}>• {item}</li>
                 ))}
               </ul>
 
               {/* CTA */}
-              <div className="flex gap-6 items-center">
-
-                {/* DETAILS PAGE */}
-                <Link
-                  to={`/services/${service.slug}`}
-                  className="text-gold hover:underline"
-                >
-                  View Details →
-                </Link>
-
-                {/* 🔥 SMART CONTACT */}
-                <Link
-                  to={`/contact?service=${encodeURIComponent(service.title)}`}
-                  className="text-gray-300 hover:text-white"
-                >
-                  Consult Now →
-                </Link>
-
-              </div>
+              <Link
+                to={`/services/${service.slug}`}
+                className="text-gold hover:underline"
+              >
+                View Details →
+              </Link>
 
             </motion.div>
           ))}
 
         </div>
 
-        {/* GLOBAL CTA */}
+        {/* CTA */}
         <div className="text-center mt-16">
           <Link
             to="/contact"
-            className="bg-gold text-black px-8 py-3 rounded-lg font-medium hover:shadow-[0_0_20px_rgba(255,215,0,0.5)] transition"
+            className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
           >
             Book Free Consultation →
           </Link>
