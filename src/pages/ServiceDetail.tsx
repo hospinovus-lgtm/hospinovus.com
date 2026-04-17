@@ -9,7 +9,6 @@ export default function ServiceDetail() {
 
   const [showPopup, setShowPopup] = useState(false)
 
-  // ✅ WhatsApp message (FIXED POSITION)
   const whatsappMessage = `Hello HOSPINOVUS,
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
@@ -61,7 +60,7 @@ Please guide me on next steps.`
           </div>
 
           <Link
-            to={`/contact?service=${service.slug}`}
+            to={`/contact?service=${service.title}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium inline-block"
           >
             BOOK NABH READINESS ASSESSMENT →
@@ -147,10 +146,52 @@ Please guide me on next steps.`
           </div>
         </div>
 
+        {/* 🔥 CASE STORY */}
+        <div>
+          <h2 className="text-2xl text-gold mb-4">Real Scenario We Handle</h2>
+          <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-3">
+            <p className="text-gray-300 text-sm">
+              A 51-bed hospital approached us with delays in NABH preparation.
+              Documentation gaps, unclear staff roles, and audit anxiety were high.
+            </p>
+            <p className="text-gray-400 text-sm">
+              We implemented structured SOPs, aligned departments, and conducted mock audits.
+            </p>
+            <p className="text-gray-300 text-sm">
+              Within months, the hospital achieved audit readiness with clarity and confidence.
+            </p>
+          </div>
+        </div>
+
+        {/* 🔥 TESTIMONIAL */}
+        <div>
+          <h2 className="text-2xl text-gold mb-4">What Hospitals Experience</h2>
+          <div className="border border-gold/20 p-6 rounded-xl">
+            <p className="text-gray-300 italic">
+              “The biggest difference was clarity. Our team finally understood NABH.
+              The implementation support made everything practical.”
+            </p>
+            <p className="text-gray-500 text-sm mt-3">
+              — Hospital Administration Team
+            </p>
+          </div>
+        </div>
+
+        {/* 🔥 RISK REVERSAL */}
+        <div className="border border-gold/20 p-6 rounded-xl text-center">
+          <h3 className="text-xl text-gold mb-3">Start Without Commitment</h3>
+          <p className="text-gray-400 text-sm mb-4">
+            Begin with a structured gap analysis before committing to full implementation.
+          </p>
+          <p className="text-gray-300 text-sm">
+            You’ll know exactly where your hospital stands — no guesswork.
+          </p>
+        </div>
+
         {/* CTA */}
         <div className="text-center">
           <Link
-            to={`/contact?service=${service.slug}`}
+            to={`/contact?service=${service.title}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
           >
             BOOK NABH READINESS ASSESSMENT →
@@ -163,14 +204,14 @@ Please guide me on next steps.`
       <div className="fixed bottom-0 left-0 w-full bg-black border-t border-gold/20 p-4 flex justify-between items-center z-50">
         <p className="text-sm text-gray-300">Need help?</p>
         <Link
-          to={`/contact?service=${service.slug}`}
+          to={`/contact?service=${service.title}`}
           className="bg-gold text-black px-4 py-2 rounded-lg text-sm"
         >
-          BOOK NABH READINESS ASSESSMENT
+          Get Started →
         </Link>
       </div>
 
-      {/* WHATSAPP (FIXED) */}
+      {/* WHATSAPP FLOAT */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
         target="_blank"
@@ -179,20 +220,37 @@ Please guide me on next steps.`
         💬
       </a>
 
-      {/* EXIT POPUP */}
+      {/* EXIT MODAL */}
       {showPopup && (
-        <div className="fixed bottom-24 right-5 bg-black border border-gold/20 p-4 rounded-lg z-50">
-          <p className="text-sm text-gray-300 mb-2">
-            Need guidance?
-          </p>
-          <Link
-            to={`/contact?service=${service.slug}`}
-            className="text-gold text-sm underline"
-          >
-            Get quick help →
-          </Link>
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999] px-4">
+          <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
+            <button onClick={() => setShowPopup(false)} className="absolute top-3 right-4">✕</button>
+
+            <h2 className="text-2xl text-gold font-bold">
+              Need Help with {service.title}?
+            </h2>
+
+            <div className="space-y-3">
+              <a href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" className="bg-green-500 block py-3 rounded-lg">
+                WhatsApp
+              </a>
+
+              <a href="tel:+918330016037" className="bg-blue-500 block py-3 rounded-lg">
+                Call
+              </a>
+
+              <a href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}`} className="bg-gray-700 block py-3 rounded-lg">
+                Email
+              </a>
+
+              <Link to={`/contact?service=${service.title}`} className="bg-gold text-black block py-3 rounded-lg">
+                Form
+              </Link>
+            </div>
+          </div>
         </div>
       )}
+
     </div>
   )
 }
