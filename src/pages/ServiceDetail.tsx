@@ -9,7 +9,7 @@ export default function ServiceDetail() {
 
   const [showPopup, setShowPopup] = useState(false)
 
-  // ✅ SERVICE-SPECIFIC CTA LOGIC
+  // ✅ SERVICE-SPECIFIC CTA
   const getCTA = () => {
     switch (service?.slug) {
       case "nabh":
@@ -31,18 +31,50 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
+  // 🔥 FIXED EXIT INTENT SYSTEM
   useEffect(() => {
-    let lastScroll = window.scrollY
+    let hasTriggered = false
 
-    const handleScroll = () => {
-      if (window.scrollY < lastScroll) {
-        setShowPopup(true)
+    const timer = setTimeout(() => {
+      // 🖥️ Desktop exit (mouse to top)
+      const handleMouseLeave = (e: MouseEvent) => {
+        if (e.clientY <= 10 && !hasTriggered) {
+          hasTriggered = true
+          setShowPopup(true)
+        }
       }
-      lastScroll = window.scrollY
-    }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+      // 📱 Mobile fallback (scroll intent)
+      let lastScroll = window.scrollY
+
+      const handleScroll = () => {
+        const scrollPercent =
+          (window.scrollY /
+            (document.body.scrollHeight - window.innerHeight)) *
+          100
+
+        if (
+          scrollPercent > 50 &&
+          window.scrollY < lastScroll &&
+          !hasTriggered
+        ) {
+          hasTriggered = true
+          setShowPopup(true)
+        }
+
+        lastScroll = window.scrollY
+      }
+
+      document.addEventListener("mouseleave", handleMouseLeave)
+      window.addEventListener("scroll", handleScroll)
+
+      return () => {
+        document.removeEventListener("mouseleave", handleMouseLeave)
+        window.removeEventListener("scroll", handleScroll)
+      }
+    }, 3000)
+
+    return () => clearTimeout(timer)
   }, [])
 
   if (!service) {
@@ -162,68 +194,6 @@ Please guide me on next steps.`
           ))}
         </div>
 
-        {/* CASE STORY */}
-        <div>
-          <h2 className="text-2xl text-gold mb-4">Real Scenario We Handle</h2>
-          <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-3">
-            <p className="text-gray-300 text-sm">
-              {commonBlocks.credibility.scenario.problem}
-            </p>
-            <p className="text-gray-400 text-sm">
-              {commonBlocks.credibility.scenario.action}
-            </p>
-            <p className="text-gray-300 text-sm">
-              {commonBlocks.credibility.scenario.result}
-            </p>
-          </div>
-        </div>
-
-        {/* TESTIMONIAL */}
-        <div>
-          <h2 className="text-2xl text-gold mb-4">What Hospitals Experience</h2>
-          <div className="border border-gold/20 p-6 rounded-xl">
-            <p className="text-gray-300 italic">
-              “{commonBlocks.credibility.testimonial.quote}”
-            </p>
-            <p className="text-gray-500 text-sm mt-3">
-              — {commonBlocks.credibility.testimonial.author}
-            </p>
-          </div>
-        </div>
-
-        {/* RISK REVERSAL */}
-        <div className="border border-gold/20 p-6 rounded-xl text-center">
-          <h3 className="text-xl text-gold mb-3">
-            {commonBlocks.credibility.riskReversal.title}
-          </h3>
-          <p className="text-gray-400 text-sm mb-4">
-            {commonBlocks.credibility.riskReversal.desc}
-          </p>
-        </div>
-
-        {/* RELATED */}
-        {relatedServices.length > 0 && (
-          <div>
-            <h2 className="text-2xl text-gold mb-6">Related Services</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {relatedServices.map((rs) => (
-                <Link
-                  key={rs.slug}
-                  to={`/services/${rs.slug}`}
-                  className="border border-gold/20 p-6 rounded-xl hover:border-gold/40 transition"
-                >
-                  <h3 className="text-lg text-gold font-semibold mb-2">
-                    {rs.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm">
-                    {rs.subtitle}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* CTA */}
         <div className="text-center">
           <Link
@@ -255,6 +225,59 @@ Please guide me on next steps.`
       >
         💬
       </a>
+
+      {/* 🔥 EXIT MODAL */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999] px-4">
+          <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
+
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute top-3 right-4 text-gray-400"
+            >
+              ✕
+            </button>
+
+            <h2 className="text-2xl text-gold font-bold">
+              Need Help with {service.title}?
+            </h2>
+
+            <div className="space-y-3">
+
+              <a
+                href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+                target="_blank"
+                className="bg-green-500 block py-3 rounded-lg"
+              >
+                WhatsApp
+              </a>
+
+              <a
+                href="tel:+918330016037"
+                className="bg-blue-500 block py-3 rounded-lg"
+              >
+                Call
+              </a>
+
+              <a
+                href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}`}
+                className="bg-gray-700 block py-3 rounded-lg"
+              >
+                Email
+              </a>
+
+              <Link
+                to={`/contact?service=${service.slug}`}
+                className="bg-gold text-black block py-3 rounded-lg"
+              >
+                Fill Form
+              </Link>
+
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
