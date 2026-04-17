@@ -136,7 +136,7 @@ export default function ServiceDetail() {
 
   <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-3">
     <p className="text-gray-300 text-sm">
-      A 40-bed hospital approached us after multiple delays in NABH preparation.
+      A 51-bed hospital approached us after multiple delays in NABH preparation.
       Documentation was incomplete, staff were unclear on protocols, and audit fear was high.
     </p>
 
