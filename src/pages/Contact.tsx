@@ -26,7 +26,6 @@ export default function Contact() {
   const [status, setStatus] = useState<"" | "success" | "error">("")
   const [loading, setLoading] = useState(false)
 
-  // PREFILL
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const service = params.get("service")
@@ -55,7 +54,6 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
     if (loading) return
 
     setLoading(true)
@@ -95,48 +93,66 @@ export default function Contact() {
     }
   }
 
-  const whatsappLink = `https://wa.me/918330016037?text=${encodeURIComponent(
-    `Hello HOSPINOVUS,
+  const whatsappMessage = `Hello HOSPINOVUS,
 Name: ${formData.name}
 Phone: ${formData.phone}
 Organization: ${formData.organization}
 Requirement: ${formData.message}`
-  )}`
 
   return (
     <div className="bg-black text-white pt-28 pb-20 px-4 md:px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
 
-        {/* 🔥 LEFT SIDE */}
+        {/* 🔥 LEFT */}
         <div>
           <h1 className="text-3xl md:text-5xl font-bold text-gold mb-6">
-            Let’s Fix What’s Slowing Your Hospital Down
+            Talk to Us — Get Clarity on What to Fix
           </h1>
 
           <p className="text-gray-400 mb-6">
-            Whether you're facing NABH delays, discharge inefficiencies, or low patient flow —
-            we help you identify the exact gaps and implement solutions that work.
+            Whether it's NABH, operations, growth, or recruitment —
+            we identify the real gaps and help you fix them with structured execution.
           </p>
 
-          {/* 🔥 PAIN TRIGGERS */}
+          {/* 🔥 SERVICES REMINDER */}
           <div className="text-gray-300 text-sm space-y-2 mb-8">
-            <p>✔ Struggling with NABH compliance?</p>
-            <p>✔ Discharge delays affecting patient experience?</p>
-            <p>✔ Operations not running smoothly?</p>
+            <p>✔ NABH Accreditation Support</p>
+            <p>✔ Hospital Operations Optimization</p>
+            <p>✔ Patient Flow & Growth Strategy</p>
+            <p>✔ Non-clinical Staff Recruitment</p>
           </div>
 
-          {/* 🔥 CONTACT OPTIONS */}
-          <div className="space-y-4 text-gray-300">
-            <a href="tel:+918330016037" className="block hover:text-gold">
-              📞 +91 83300 16037
+          {/* 🔥 CONTACT BUTTONS (UPGRADED) */}
+          <div className="space-y-4">
+
+            <a
+              href="tel:+918330016037"
+              className="flex items-center justify-center gap-2 bg-blue-500 text-white py-3 rounded-lg font-medium"
+            >
+              <FaPhone /> Call Now
             </a>
-            <a href="tel:+917594825179" className="block hover:text-gold">
-              📞 +91 75948 25179
+
+            <a
+              href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+              target="_blank"
+              className="flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-lg font-medium"
+            >
+              <FaWhatsapp /> Chat on WhatsApp
             </a>
-            <a href="mailto:hospinovus@gmail.com" className="block hover:text-gold">
-              ✉ hospinovus@gmail.com
+
+            <a
+              href="mailto:hospinovus@gmail.com"
+              className="flex items-center justify-center gap-2 bg-gray-700 text-white py-3 rounded-lg font-medium"
+            >
+              <FaEnvelope /> Send Email
             </a>
+
           </div>
+
+          {/* 🔥 URGENCY */}
+          <p className="text-gray-500 text-sm mt-6">
+            Most hospitals delay fixing systems — until it starts affecting patients and audits.
+          </p>
         </div>
 
         {/* 🔥 FORM */}
@@ -185,7 +201,7 @@ Requirement: ${formData.message}`
 
           <textarea
             name="message"
-            placeholder="Briefly describe your problem (e.g., NABH delay, discharge issue)"
+            placeholder="Briefly describe your problem"
             rows={4}
             value={formData.message}
             onChange={handleChange}
@@ -193,7 +209,6 @@ Requirement: ${formData.message}`
           />
           {errors.message && <p className="text-red-400 text-sm">{errors.message}</p>}
 
-          {/* 🔥 CTA */}
           <button
             type="submit"
             disabled={loading}
@@ -202,9 +217,8 @@ Requirement: ${formData.message}`
             {loading ? "Submitting..." : "Get Clear Action Plan →"}
           </button>
 
-          {/* 🔥 TRUST */}
           <p className="text-gray-500 text-xs text-center">
-            No spam. Just a structured response to your hospital’s needs.
+            No spam. Just clarity and actionable steps.
           </p>
 
           {/* SUCCESS */}
@@ -217,7 +231,11 @@ Requirement: ${formData.message}`
                   <FaPhone />
                 </a>
 
-                <a href={whatsappLink} target="_blank" className="text-green-400">
+                <a
+                  href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+                  target="_blank"
+                  className="text-green-400"
+                >
                   <FaWhatsapp />
                 </a>
 
