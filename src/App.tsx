@@ -4,6 +4,7 @@ import Hero from "./components/Hero"
 import Services from "./components/Services"
 import ServicesPage from "./pages/ServicesPage"
 import ServiceDetail from "./pages/ServiceDetail"
+import Contact from "./pages/Contact"
 
 function Home() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/:slug" element={<ServiceDetail />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </>
   )
