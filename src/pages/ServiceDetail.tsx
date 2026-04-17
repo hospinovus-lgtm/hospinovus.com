@@ -26,59 +26,43 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
-  // 🔥 INTERNAL LINKING (RESTORED)
+  // 🔗 INTERNAL LINKING
   const getInternalLinkingText = () => {
     switch (service?.slug) {
       case "nabh":
         return (
           <p className="text-gray-400 text-sm">
             NABH success depends on{" "}
-            <Link to="/services/operations" className="text-gold underline">
-              structured operations
-            </Link>{" "}
+            <Link to="/services/operations" className="text-gold underline">structured operations</Link>{" "}
             and{" "}
-            <Link to="/services/recruitment" className="text-gold underline">
-              trained teams
-            </Link>.
+            <Link to="/services/recruitment" className="text-gold underline">trained teams</Link>.
           </p>
         )
       case "operations":
         return (
           <p className="text-gray-400 text-sm">
-            Operations impact{" "}
-            <Link to="/services/nabh" className="text-gold underline">
-              NABH readiness
-            </Link>{" "}
-            and drive{" "}
-            <Link to="/services/growth" className="text-gold underline">
-              hospital growth
-            </Link>.
+            Operations directly impact{" "}
+            <Link to="/services/nabh" className="text-gold underline">NABH readiness</Link>{" "}
+            and{" "}
+            <Link to="/services/growth" className="text-gold underline">growth</Link>.
           </p>
         )
       case "growth":
         return (
           <p className="text-gray-400 text-sm">
             Growth requires{" "}
-            <Link to="/services/operations" className="text-gold underline">
-              strong operations
-            </Link>{" "}
+            <Link to="/services/operations" className="text-gold underline">efficient operations</Link>{" "}
             and the right{" "}
-            <Link to="/services/recruitment" className="text-gold underline">
-              team
-            </Link>.
+            <Link to="/services/recruitment" className="text-gold underline">team</Link>.
           </p>
         )
       case "recruitment":
         return (
           <p className="text-gray-400 text-sm">
-            Hiring affects{" "}
-            <Link to="/services/operations" className="text-gold underline">
-              operations
-            </Link>{" "}
+            Hiring impacts{" "}
+            <Link to="/services/operations" className="text-gold underline">operations</Link>{" "}
             and{" "}
-            <Link to="/services/nabh" className="text-gold underline">
-              accreditation success
-            </Link>.
+            <Link to="/services/nabh" className="text-gold underline">compliance</Link>.
           </p>
         )
       default:
@@ -86,41 +70,10 @@ Please guide me on next steps.`
     }
   }
 
-  // 🔥 CASE STUDY (KEPT)
-  const getCaseStudy = () => {
-    switch (service?.slug) {
-      case "nabh":
-        return {
-          problem: "60-bed hospital struggled with audit readiness.",
-          action: "SOP restructuring + mock audits.",
-          result: "Achieved NABH readiness in 4 months.",
-        }
-      case "operations":
-        return {
-          problem: "6–8 hour discharge delays.",
-          action: "Workflow + TAT system implemented.",
-          result: "Reduced to under 2 hours.",
-        }
-      case "growth":
-        return {
-          problem: "Low patient inflow.",
-          action: "Repositioning + digital alignment.",
-          result: "40% growth in 3 months.",
-        }
-      case "recruitment":
-        return {
-          problem: "High staff turnover.",
-          action: "Structured hiring + onboarding.",
-          result: "Improved stability & experience.",
-        }
-      default:
-        return null
-    }
-  }
+  // 🔥 CASE STUDY
+  const caseStudy = commonBlocks.credibility.scenario
 
-  const caseStudy = getCaseStudy()
-
-  // 🔥 EXIT POPUP (FULLY FIXED)
+  // 🚨 EXIT INTENT
   useEffect(() => {
     let triggered = false
 
@@ -137,8 +90,7 @@ Please guide me on next steps.`
     const handleScroll = () => {
       const percent =
         (window.scrollY /
-          (document.body.scrollHeight - window.innerHeight)) *
-        100
+          (document.body.scrollHeight - window.innerHeight)) * 100
 
       if (percent > 60 && window.scrollY < lastScroll && !triggered) {
         triggered = true
@@ -170,7 +122,7 @@ Please guide me on next steps.`
   )
 
   return (
-    <div className="bg-black text-white pt-28 pb-40 px-4 md:px-6">
+    <div className="bg-black text-white pt-28 pb-44 px-4 md:px-6">
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
 
@@ -179,9 +131,15 @@ Please guide me on next steps.`
 
           {/* HERO */}
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold">{service.title}</h1>
+            <p className="text-sm text-gold uppercase">{service.title}</p>
 
-            <p className="text-gray-400">{service.subtitle}</p>
+            <h1 className="text-4xl md:text-5xl font-bold">
+              {service.title}
+            </h1>
+
+            <p className="text-gray-400 max-w-2xl">
+              {service.subtitle}
+            </p>
 
             {getInternalLinkingText()}
 
@@ -190,32 +148,40 @@ Please guide me on next steps.`
               onClick={() =>
                 track("CTA Click", { service: service.slug, location: "hero" })
               }
-              className="bg-gold text-black px-8 py-3 rounded-lg inline-block"
+              className="bg-gold text-black px-8 py-3 rounded-lg font-medium inline-block"
             >
               {ctaText} →
             </Link>
           </div>
 
+          {/* SECTIONS */}
           <Section title="Common Challenges" data={service.problems} />
           <Section title="Our Approach" data={service.process} />
           <Section title="Expected Outcomes" data={service.outcomes} />
           <Section title="Who This Is For" data={service.idealFor} />
 
-          {/* CASE */}
-          {caseStudy && (
-            <div className="border border-gold/20 p-6 rounded-xl bg-zinc-900">
-              <h2 className="text-gold text-xl mb-3">Real Case</h2>
-              <p><b>Problem:</b> {caseStudy.problem}</p>
-              <p><b>Action:</b> {caseStudy.action}</p>
-              <p><b>Result:</b> {caseStudy.result}</p>
-            </div>
-          )}
+          {/* CASE STUDY */}
+          <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-4">
+            <h2 className="text-2xl text-gold">Real Scenario We Handle</h2>
 
-          {/* AUTH */}
+            <p className="text-gray-300 text-sm">
+              <span className="text-gold font-semibold">Problem:</span> {caseStudy.problem}
+            </p>
+
+            <p className="text-gray-400 text-sm">
+              <span className="text-gold font-semibold">What We Did:</span> {caseStudy.action}
+            </p>
+
+            <p className="text-gray-300 text-sm">
+              <span className="text-gold font-semibold">Result:</span> {caseStudy.result}
+            </p>
+          </div>
+
+          {/* AUTHORITY */}
           <div className="grid md:grid-cols-3 gap-6 text-center">
             {commonBlocks.credibility.authority.map((item, i) => (
               <div key={i} className="border border-gold/20 p-6 rounded-xl">
-                <p className="text-3xl text-gold">{item.value}</p>
+                <p className="text-3xl text-gold font-bold">{item.value}</p>
                 <p className="text-gray-400 text-sm">{item.label}</p>
               </div>
             ))}
@@ -224,12 +190,25 @@ Please guide me on next steps.`
           {/* RELATED */}
           {relatedServices.length > 0 && (
             <div>
-              <h2 className="text-gold text-2xl mb-4">Related</h2>
-              {relatedServices.map((rs) => (
-                <Link key={rs.slug} to={`/services/${rs.slug}`}>
-                  {rs.title}
-                </Link>
-              ))}
+              <h2 className="text-2xl text-gold mb-6">Related Services</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {relatedServices.map((rs) => (
+                  <Link
+                    key={rs.slug}
+                    to={`/services/${rs.slug}`}
+                    onClick={() =>
+                      track("Related Click", {
+                        from: service.slug,
+                        to: rs.slug,
+                      })
+                    }
+                    className="border border-gold/20 p-6 rounded-xl hover:border-gold/40"
+                  >
+                    <h3 className="text-gold font-semibold">{rs.title}</h3>
+                    <p className="text-gray-400 text-sm">{rs.subtitle}</p>
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
 
@@ -237,21 +216,33 @@ Please guide me on next steps.`
           <div className="text-center pt-10">
             <Link
               to={`/contact?service=${service.slug}`}
-              className="bg-gold text-black px-8 py-3 rounded-lg"
+              onClick={() =>
+                track("CTA Click", { service: service.slug, location: "bottom" })
+              }
+              className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
             >
-              {ctaText}
+              {ctaText} →
             </Link>
           </div>
+
         </div>
 
-        {/* FAQ */}
+        {/* FAQ SIDEBAR */}
         {service.faqs?.length > 0 && (
           <div className="hidden md:block">
-            <div className="sticky top-28 bg-zinc-900 p-6 rounded-xl">
+            <div className="sticky top-28 space-y-4 border border-gold/20 p-6 rounded-xl bg-zinc-900 shadow-lg">
+              <h2 className="text-lg text-gold font-semibold">
+                Quick Answers
+              </h2>
+
               {service.faqs.map((faq, i) => (
-                <div key={i}>
-                  <p className="text-gold">{faq.q}</p>
-                  <p className="text-gray-400">{faq.a}</p>
+                <div key={i} className="border-b border-gold/10 pb-3 last:border-none">
+                  <p className="text-sm text-gold font-medium">
+                    {faq.q}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {faq.a}
+                  </p>
                 </div>
               ))}
             </div>
@@ -259,37 +250,79 @@ Please guide me on next steps.`
         )}
       </div>
 
-      {/* WHATSAPP */}
+      {/* WHATSAPP FLOAT */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+        onClick={() => track("WhatsApp Click", { service: service.slug })}
         target="_blank"
-        className="fixed bottom-24 right-5 bg-green-500 p-4 rounded-full"
+        className="fixed bottom-24 right-5 bg-green-500 text-white p-4 rounded-full shadow-lg z-50"
       >
         💬
       </a>
 
-      {/* 🔥 EXIT POPUP WITH EMAIL RESTORED */}
+      {/* EXIT POPUP */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999]">
-          <div className="bg-zinc-900 p-8 rounded-xl text-center space-y-4">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[999] px-4">
+          <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
 
-            <button onClick={() => setShowPopup(false)}>✕</button>
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute top-3 right-4"
+            >
+              ✕
+            </button>
 
-            <h2 className="text-gold text-xl">Before You Leave...</h2>
+            <h2 className="text-2xl text-gold font-bold">
+              Before You Leave...
+            </h2>
 
-            <a href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}>
-              WhatsApp
-            </a>
+            <p className="text-gray-300 text-sm">
+              Let’s quickly identify what’s slowing your hospital.
+            </p>
 
-            <a href="tel:+918330016037">Call</a>
+            <div className="space-y-3">
 
-            <a href={`mailto:hospinovus@gmail.com?subject=${service.title}`}>
-              Email
-            </a>
+              <a
+                href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+                onClick={() =>
+                  track("Exit WhatsApp Click", { service: service.slug })
+                }
+                className="bg-green-500 block py-3 rounded-lg"
+              >
+                💬 WhatsApp
+              </a>
 
-            <Link to={`/contact?service=${service.slug}`}>
-              Get Plan
-            </Link>
+              <a
+                href="tel:+918330016037"
+                onClick={() =>
+                  track("Exit Call Click", { service: service.slug })
+                }
+                className="bg-blue-500 block py-3 rounded-lg"
+              >
+                📞 Call
+              </a>
+
+              <a
+                href={`mailto:hospinovus@gmail.com?subject=${service.title}`}
+                onClick={() =>
+                  track("Exit Email Click", { service: service.slug })
+                }
+                className="bg-gray-700 block py-3 rounded-lg"
+              >
+                ✉ Email
+              </a>
+
+              <Link
+                to={`/contact?service=${service.slug}`}
+                onClick={() =>
+                  track("Exit CTA Click", { service: service.slug })
+                }
+                className="bg-gold text-black block py-3 rounded-lg"
+              >
+                📋 Get Action Plan
+              </Link>
+
+            </div>
 
           </div>
         </div>
@@ -300,10 +333,11 @@ Please guide me on next steps.`
 
 function Section({ title, data }: any) {
   if (!data?.length) return null
+
   return (
     <div>
-      <h2 className="text-gold text-2xl">{title}</h2>
-      <ul>
+      <h2 className="text-2xl text-gold mb-4">{title}</h2>
+      <ul className="space-y-2 text-gray-300">
         {data.map((item: string, i: number) => (
           <li key={i}>• {item}</li>
         ))}
