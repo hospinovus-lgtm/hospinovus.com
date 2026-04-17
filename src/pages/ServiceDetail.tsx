@@ -41,20 +41,20 @@ Please guide me on next steps.`
             <Link to="/services/operations" className="text-gold underline">
               structured operations
             </Link>{" "}
-            and a{" "}
+            and{" "}
             <Link to="/services/recruitment" className="text-gold underline">
-              well-trained team
+              trained teams
             </Link>.
           </p>
         )
       case "operations":
         return (
           <p className="text-gray-400 text-sm">
-            Strong operations help achieve{" "}
+            Operations directly impact{" "}
             <Link to="/services/nabh" className="text-gold underline">
               NABH compliance
             </Link>{" "}
-            and enable{" "}
+            and{" "}
             <Link to="/services/growth" className="text-gold underline">
               hospital growth
             </Link>.
@@ -63,9 +63,9 @@ Please guide me on next steps.`
       case "growth":
         return (
           <p className="text-gray-400 text-sm">
-            Growth depends on{" "}
+            Growth requires{" "}
             <Link to="/services/operations" className="text-gold underline">
-              operations
+              strong operations
             </Link>{" "}
             and the right{" "}
             <Link to="/services/recruitment" className="text-gold underline">
@@ -76,7 +76,7 @@ Please guide me on next steps.`
       case "recruitment":
         return (
           <p className="text-gray-400 text-sm">
-            Hiring impacts{" "}
+            Hiring affects{" "}
             <Link to="/services/operations" className="text-gold underline">
               operations
             </Link>{" "}
@@ -91,7 +91,7 @@ Please guide me on next steps.`
     }
   }
 
-  // EXIT INTENT
+  // EXIT INTENT (FIXED CLEANUP)
   useEffect(() => {
     let triggered = false
 
@@ -141,11 +141,11 @@ Please guide me on next steps.`
   )
 
   return (
-    <div className="bg-black text-white pt-28 pb-32 px-4 md:px-6">
+    <div className="bg-black text-white pt-28 pb-40 px-4 md:px-6">
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
 
-        {/* LEFT */}
+        {/* LEFT CONTENT */}
         <div className="md:col-span-2 space-y-16">
 
           {/* HERO */}
@@ -162,24 +162,34 @@ Please guide me on next steps.`
 
             <Link
               to={`/contact?service=${service.slug}`}
-              onClick={() => track("CTA Click", { service: service.slug, location: "hero" })}
-              className="bg-gold text-black px-8 py-3 rounded-lg"
+              onClick={() =>
+                track("CTA Click", { service: service.slug, location: "hero" })
+              }
+              className="bg-gold text-black px-8 py-3 rounded-lg inline-block"
             >
               {ctaText} →
             </Link>
           </div>
 
           {/* PROBLEMS */}
-          <Section title="Common Challenges" data={service.problems} />
+          {service.problems?.length > 0 && (
+            <Section title="Common Challenges" data={service.problems} />
+          )}
 
           {/* PROCESS */}
-          <Section title="Our Approach" data={service.process} />
+          {service.process?.length > 0 && (
+            <Section title="Our Approach" data={service.process} />
+          )}
 
           {/* OUTCOMES */}
-          <Section title="Expected Outcomes" data={service.outcomes} />
+          {service.outcomes?.length > 0 && (
+            <Section title="Expected Outcomes" data={service.outcomes} />
+          )}
 
           {/* IDEAL */}
-          <Section title="Who This Is For" data={service.idealFor} />
+          {service.idealFor?.length > 0 && (
+            <Section title="Who This Is For" data={service.idealFor} />
+          )}
 
           {/* AUTHORITY */}
           <div className="grid md:grid-cols-3 gap-6 text-center">
@@ -201,71 +211,102 @@ Please guide me on next steps.`
                     key={rs.slug}
                     to={`/services/${rs.slug}`}
                     onClick={() =>
-                      track("Related Service Click", {
-                        from: service.slug,
-                        to: rs.slug,
-                      })
+                      track("Related Click", { from: service.slug, to: rs.slug })
                     }
                     className="border border-gold/20 p-6 rounded-xl"
                   >
-                    <h3 className="text-gold font-semibold">{rs.title}</h3>
-                    <p className="text-gray-400 text-sm mt-2">{rs.subtitle}</p>
+                    <h3 className="text-gold">{rs.title}</h3>
+                    <p className="text-gray-400 text-sm">{rs.subtitle}</p>
                   </Link>
                 ))}
               </div>
             </div>
           )}
 
+          {/* FINAL CTA */}
+          <div className="text-center pt-10">
+            <Link
+              to={`/contact?service=${service.slug}`}
+              onClick={() =>
+                track("CTA Click", { service: service.slug, location: "bottom" })
+              }
+              className="bg-gold text-black px-8 py-3 rounded-lg"
+            >
+              {ctaText} →
+            </Link>
+          </div>
+
         </div>
 
         {/* RIGHT FAQ */}
         {service.faqs?.length > 0 && (
-          <div className="sticky top-28 space-y-4 border border-gold/20 p-6 rounded-xl bg-zinc-900 h-fit">
-            <h2 className="text-lg text-gold">Quick Answers</h2>
+          <div className="hidden md:block">
+            <div className="sticky top-28 space-y-4 border border-gold/20 p-6 rounded-xl bg-zinc-900">
+              <h2 className="text-gold">Quick Answers</h2>
 
-            {service.faqs.map((faq, i) => (
-              <div key={i}>
-                <p className="text-gold text-sm">{faq.q}</p>
-                <p className="text-gray-400 text-xs">{faq.a}</p>
-              </div>
-            ))}
+              {service.faqs.map((faq, i) => (
+                <div key={i}>
+                  <p className="text-gold text-sm">{faq.q}</p>
+                  <p className="text-gray-400 text-xs">{faq.a}</p>
+                </div>
+              ))}
 
-            <Link
-              to={`/contact?service=${service.slug}`}
-              onClick={() => track("CTA Click", { service: service.slug, location: "faq" })}
-              className="block bg-gold text-black py-2 text-center rounded-lg"
-            >
-              {ctaText}
-            </Link>
+              <Link
+                to={`/contact?service=${service.slug}`}
+                className="bg-gold text-black py-2 text-center block rounded-lg"
+              >
+                {ctaText}
+              </Link>
+            </div>
           </div>
         )}
 
       </div>
 
-      {/* WHATSAPP */}
+      {/* WHATSAPP FLOAT */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
-        onClick={() => track("WhatsApp Click", { service: service.slug })}
         target="_blank"
-        className="fixed bottom-20 right-5 bg-green-500 p-4 rounded-full"
+        className="fixed bottom-24 right-5 bg-green-500 p-4 rounded-full z-50"
       >
         💬
       </a>
 
-      {/* EXIT POPUP */}
+      {/* EXIT POPUP (FULL FIXED) */}
       {showPopup && (
         <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999]">
-          <div className="bg-zinc-900 p-8 rounded-xl text-center space-y-4">
+          <div className="bg-zinc-900 p-8 rounded-xl space-y-4 text-center relative">
 
-            <h2 className="text-gold text-xl">Before You Leave</h2>
-
-            <Link
-              to={`/contact?service=${service.slug}`}
-              onClick={() => track("Exit CTA Click", { service: service.slug })}
-              className="bg-gold text-black px-6 py-2 rounded-lg"
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute top-2 right-3"
             >
-              Get Action Plan
-            </Link>
+              ✕
+            </button>
+
+            <h2 className="text-gold text-xl font-bold">
+              Before You Leave...
+            </h2>
+
+            <p className="text-gray-400 text-sm">
+              Let’s quickly identify what’s slowing your hospital.
+            </p>
+
+            <div className="space-y-3">
+
+              <a href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`} className="bg-green-500 block py-2 rounded-lg">
+                WhatsApp
+              </a>
+
+              <a href="tel:+918330016037" className="bg-blue-500 block py-2 rounded-lg">
+                Call
+              </a>
+
+              <Link to={`/contact?service=${service.slug}`} className="bg-gold text-black block py-2 rounded-lg">
+                Get Action Plan
+              </Link>
+
+            </div>
 
           </div>
         </div>
@@ -274,7 +315,6 @@ Please guide me on next steps.`
   )
 }
 
-// REUSABLE SECTION COMPONENT
 function Section({ title, data }: any) {
   if (!data?.length) return null
 
