@@ -31,7 +31,7 @@ I would like to discuss improving my hospital operations.`
         </Link>
 
         {/* DESKTOP NAV */}
-        <nav className="hidden md:flex items-center gap-6 text-sm relative">
+        <nav className="hidden md:flex items-center gap-6 text-sm">
 
           <NavLink to="/" className={({ isActive }) =>
             isActive ? "text-gold border-b border-gold pb-1" : "hover:text-gold"
@@ -45,29 +45,41 @@ I would like to discuss improving my hospital operations.`
             About
           </NavLink>
 
-          {/* 🔥 SERVICES DROPDOWN */}
+          {/* 🔥 FIXED SERVICES DROPDOWN */}
           <div
+            className="relative"
             onMouseEnter={() => setShowDropdown(true)}
             onMouseLeave={() => setShowDropdown(false)}
-            className="relative"
           >
-            <span className="cursor-pointer hover:text-gold">
+            {/* CLICKABLE + HOVERABLE */}
+            <Link
+              to="/services"
+              className="cursor-pointer hover:text-gold flex items-center gap-1"
+            >
               Services ▾
-            </span>
+            </Link>
 
-            {showDropdown && (
-              <div className="absolute top-8 left-0 bg-black border border-gold/20 rounded-lg p-4 w-64 space-y-2 shadow-lg">
-                {services.map((s) => (
-                  <Link
-                    key={s.slug}
-                    to={`/services/${s.slug}`}
-                    className="block text-gray-300 hover:text-gold text-sm"
-                  >
-                    {s.name}
-                  </Link>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {showDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-0 mt-1 bg-black border border-gold/20 rounded-lg p-4 w-64 space-y-2 shadow-lg z-50"
+                >
+                  {services.map((s) => (
+                    <Link
+                      key={s.slug}
+                      to={`/services/${s.slug}`}
+                      className="block text-gray-300 hover:text-gold text-sm transition"
+                    >
+                      {s.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <NavLink to="/contact" className={({ isActive }) =>
@@ -88,7 +100,7 @@ I would like to discuss improving my hospital operations.`
           {/* CTA */}
           <Link
             to="/contact"
-            className="bg-gold text-black px-5 py-2 rounded-lg font-semibold"
+            className="bg-gold text-black px-5 py-2 rounded-lg font-semibold hover:shadow-[0_0_15px_rgba(255,215,0,0.5)] transition"
           >
             Get Audit-Ready →
           </Link>
@@ -119,6 +131,7 @@ I would like to discuss improving my hospital operations.`
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
+              transition={{ type: "tween" }}
               className="fixed top-0 right-0 w-3/4 h-full bg-black p-6 flex flex-col gap-6 text-lg z-50 border-l border-gold/20"
             >
               <button
@@ -130,18 +143,13 @@ I would like to discuss improving my hospital operations.`
 
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
               <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
-
-              {/* 🔥 MOBILE: GO TO SERVICES PAGE */}
-              <Link to="/services" onClick={() => setMenuOpen(false)}>
-                Services
-              </Link>
-
+              <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
               <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
 
               <a
                 href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
                 target="_blank"
-                className="bg-green-500 text-white px-4 py-3 rounded-lg text-center"
+                className="bg-green-500 text-white px-4 py-3 rounded-lg text-center font-medium"
               >
                 Chat on WhatsApp
               </a>
@@ -149,7 +157,7 @@ I would like to discuss improving my hospital operations.`
               <Link
                 to="/contact"
                 onClick={() => setMenuOpen(false)}
-                className="bg-gold text-black px-4 py-3 rounded-lg text-center"
+                className="bg-gold text-black px-4 py-3 rounded-lg text-center font-semibold"
               >
                 Get Audit-Ready →
               </Link>
