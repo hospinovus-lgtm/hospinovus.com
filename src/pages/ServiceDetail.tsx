@@ -128,7 +128,64 @@ export default function ServiceDetail() {
     <li>• Focus on long-term operational stability</li>
   </ul>
 </div>
+{/* CASE-STYLE STORY */}
+<div>
+  <h2 className="text-2xl text-gold mb-4">
+    Real Scenario We Handle
+  </h2>
 
+  <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-3">
+    <p className="text-gray-300 text-sm">
+      A 40-bed hospital approached us after multiple delays in NABH preparation.
+      Documentation was incomplete, staff were unclear on protocols, and audit fear was high.
+    </p>
+
+    <p className="text-gray-400 text-sm">
+      We conducted a structured gap analysis, implemented department-wise SOPs,
+      and trained staff for audit readiness.
+    </p>
+
+    <p className="text-gray-300 text-sm">
+      Within months, the hospital transitioned into a fully compliant system,
+      significantly improving documentation quality and operational clarity.
+    </p>
+  </div>
+</div>
+
+
+{/* TESTIMONIAL */}
+<div>
+  <h2 className="text-2xl text-gold mb-4">
+    What Hospitals Experience
+  </h2>
+
+  <div className="border border-gold/20 p-6 rounded-xl">
+    <p className="text-gray-300 italic">
+      “The biggest difference was clarity. Our team finally understood what NABH actually requires.
+      The implementation support made everything practical.”
+    </p>
+
+    <p className="text-gray-500 text-sm mt-3">
+      — Hospital Administration Team
+    </p>
+  </div>
+</div>
+
+
+{/* RISK REVERSAL */}
+<div className="border border-gold/20 p-6 rounded-xl text-center">
+  <h3 className="text-xl text-gold mb-3">
+    Start Without Commitment
+  </h3>
+
+  <p className="text-gray-400 text-sm mb-4">
+    Begin with a gap analysis and clear action plan before committing to full implementation.
+  </p>
+
+  <p className="text-gray-300 text-sm">
+    You’ll know exactly where your hospital stands — no guesswork.
+  </p>
+</div>
 
 {/* URGENCY BLOCK */}
 <div className="border border-gold/20 p-6 rounded-xl text-center bg-gradient-to-br from-black to-[#1a1a1a]">
