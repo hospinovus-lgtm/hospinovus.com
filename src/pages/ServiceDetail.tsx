@@ -30,7 +30,71 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
-  // 🔥 EXIT INTENT SYSTEM (FIXED)
+  // ✅ DYNAMIC INTERNAL LINKING (FIXED)
+  const getInternalLinkingText = () => {
+    switch (service?.slug) {
+      case "nabh":
+        return (
+          <p className="text-gray-400 text-sm">
+            NABH success depends heavily on how well your{" "}
+            <Link to="/services/operations" className="text-gold underline">
+              hospital operations are structured
+            </Link>{" "}
+            and whether your{" "}
+            <Link to="/services/recruitment" className="text-gold underline">
+              team is properly trained and aligned
+            </Link>.
+          </p>
+        )
+
+      case "operations":
+        return (
+          <p className="text-gray-400 text-sm">
+            Strong operations not only improve efficiency but also prepare your hospital for{" "}
+            <Link to="/services/nabh" className="text-gold underline">
+              NABH compliance
+            </Link>{" "}
+            and enable sustainable{" "}
+            <Link to="/services/growth" className="text-gold underline">
+              business growth
+            </Link>.
+          </p>
+        )
+
+      case "growth":
+        return (
+          <p className="text-gray-400 text-sm">
+            Growth is not just marketing — it depends on{" "}
+            <Link to="/services/operations" className="text-gold underline">
+              operational efficiency
+            </Link>{" "}
+            and having the right{" "}
+            <Link to="/services/recruitment" className="text-gold underline">
+              team in place
+            </Link>.
+          </p>
+        )
+
+      case "recruitment":
+        return (
+          <p className="text-gray-400 text-sm">
+            Hiring the right team directly impacts your{" "}
+            <Link to="/services/operations" className="text-gold underline">
+              daily operations
+            </Link>{" "}
+            and plays a critical role in achieving{" "}
+            <Link to="/services/nabh" className="text-gold underline">
+              NABH standards
+            </Link>.
+          </p>
+        )
+
+      default:
+        return null
+    }
+  }
+
+  // 🔥 EXIT INTENT SYSTEM (IMPROVED)
   useEffect(() => {
     let hasTriggered = false
 
@@ -51,7 +115,7 @@ Please guide me on next steps.`
           100
 
         if (
-          scrollPercent > 50 &&
+          scrollPercent > 60 &&
           window.scrollY < lastScroll &&
           !hasTriggered
         ) {
@@ -69,7 +133,7 @@ Please guide me on next steps.`
         document.removeEventListener("mouseleave", handleMouseLeave)
         window.removeEventListener("scroll", handleScroll)
       }
-    }, 3000)
+    }, 4000)
 
     return () => clearTimeout(timer)
   }, [])
@@ -98,17 +162,8 @@ Please guide me on next steps.`
             {service.subtitle}
           </p>
 
-          {/* 🔥 INLINE INTERNAL LINKING */}
-          <p className="text-gray-400 text-sm">
-            Many hospitals fail to achieve results because{" "}
-            <Link to="/services/operations" className="text-gold underline">
-              operations are not structured
-            </Link>{" "}
-            or teams are not aligned through{" "}
-            <Link to="/services/recruitment" className="text-gold underline">
-              proper workforce systems
-            </Link>.
-          </p>
+          {/* ✅ DYNAMIC LINKING */}
+          {getInternalLinkingText()}
 
           <Link
             to={`/contact?service=${service.slug}`}
@@ -191,7 +246,7 @@ Please guide me on next steps.`
           ))}
         </div>
 
-        {/* 🔗 RELATED SERVICES */}
+        {/* RELATED */}
         {relatedServices.length > 0 && (
           <div>
             <h2 className="text-2xl text-gold mb-6">Related Services</h2>
@@ -232,7 +287,7 @@ Please guide me on next steps.`
         </Link>
       </div>
 
-      {/* WHATSAPP FLOAT */}
+      {/* WHATSAPP */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
         target="_blank"
@@ -241,7 +296,7 @@ Please guide me on next steps.`
         💬
       </a>
 
-      {/* 🔥 EXIT POPUP (OPTIMIZED) */}
+      {/* EXIT POPUP */}
       {showPopup && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[999] px-4">
           <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
@@ -258,12 +313,12 @@ Please guide me on next steps.`
             </h2>
 
             <p className="text-gray-300 text-sm">
-              Hospitals struggle with delays, compliance gaps, and inefficiencies.
-              We can quickly identify what’s holding you back.
+              Most hospitals don’t fail due to lack of effort —
+              they fail due to lack of structured systems.
             </p>
 
             <p className="text-gray-400 text-sm">
-              Let’s discuss <span className="text-gold">{service.title}</span>
+              Let’s fix your <span className="text-gold">{service.title}</span>
             </p>
 
             <div className="space-y-3">
@@ -290,7 +345,7 @@ Please guide me on next steps.`
             </div>
 
             <p className="text-gray-500 text-xs">
-              No spam. Just clarity for your hospital.
+              No spam. Just clarity.
             </p>
 
           </div>
