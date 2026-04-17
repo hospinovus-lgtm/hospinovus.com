@@ -9,6 +9,24 @@ export default function ServiceDetail() {
 
   const [showPopup, setShowPopup] = useState(false)
 
+  // ✅ SERVICE-SPECIFIC CTA LOGIC
+  const getCTA = () => {
+    switch (service?.slug) {
+      case "nabh":
+        return "Book NABH Gap Analysis"
+      case "operations":
+        return "Fix My Hospital Operations"
+      case "growth":
+        return "Increase Patient Footfall"
+      case "recruitment":
+        return "Build My Hospital Team"
+      default:
+        return "Book Consultation"
+    }
+  }
+
+  const ctaText = getCTA()
+
   const whatsappMessage = `Hello HOSPINOVUS,
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
@@ -35,7 +53,6 @@ Please guide me on next steps.`
     )
   }
 
-  // 🔗 RELATED SERVICES
   const relatedServices = servicesData.filter((s) =>
     service.related?.includes(s.slug)
   )
@@ -68,7 +85,7 @@ Please guide me on next steps.`
             to={`/contact?service=${service.slug}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium inline-block"
           >
-            {commonBlocks.cta.primary} →
+            {ctaText} →
           </Link>
         </div>
 
@@ -184,7 +201,7 @@ Please guide me on next steps.`
           </p>
         </div>
 
-        {/* 🔗 RELATED SERVICES */}
+        {/* RELATED */}
         {relatedServices.length > 0 && (
           <div>
             <h2 className="text-2xl text-gold mb-6">Related Services</h2>
@@ -213,7 +230,7 @@ Please guide me on next steps.`
             to={`/contact?service=${service.slug}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
           >
-            {commonBlocks.cta.primary} →
+            {ctaText} →
           </Link>
         </div>
 
@@ -226,11 +243,11 @@ Please guide me on next steps.`
           to={`/contact?service=${service.slug}`}
           className="bg-gold text-black px-4 py-2 rounded-lg text-sm"
         >
-          Get Started →
+          {ctaText}
         </Link>
       </div>
 
-      {/* WHATSAPP FLOAT */}
+      {/* WHATSAPP */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
         target="_blank"
@@ -238,42 +255,6 @@ Please guide me on next steps.`
       >
         💬
       </a>
-
-      {/* EXIT MODAL */}
-      {showPopup && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999] px-4">
-          <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
-            <button onClick={() => setShowPopup(false)} className="absolute top-3 right-4">
-              ✕
-            </button>
-
-            <h2 className="text-2xl text-gold font-bold">
-              Need Help with {service.title}?
-            </h2>
-
-            <div className="space-y-3">
-              <a href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" className="bg-green-500 block py-3 rounded-lg">
-                WhatsApp
-              </a>
-
-              <a href="tel:+918330016037" className="bg-blue-500 block py-3 rounded-lg">
-                Call
-              </a>
-
-              <a
-                href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}`}
-                className="bg-gray-700 block py-3 rounded-lg"
-              >
-                Email
-              </a>
-
-              <Link to={`/contact?service=${service.slug}`} className="bg-gold text-black block py-3 rounded-lg">
-                Form
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
