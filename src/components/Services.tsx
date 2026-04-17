@@ -58,7 +58,7 @@ export default function Services() {
     <section className="bg-black text-white py-20 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
 
-        {/* SECTION HEADER */}
+        {/* HEADER */}
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">
             Healthcare Consulting Services
@@ -68,7 +68,7 @@ export default function Services() {
           </p>
         </div>
 
-        {/* SERVICES GRID */}
+        {/* GRID */}
         <div className="grid md:grid-cols-2 gap-8">
 
           {services.map((service) => (
@@ -77,7 +77,7 @@ export default function Services() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="border border-gold/20 rounded-2xl p-6 bg-gradient-to-br from-black to-[#1a1a1a] hover:border-gold/40 transition"
+              className="border border-gold/20 rounded-2xl p-6 bg-gradient-to-br from-black to-[#1a1a1a] hover:border-gold/40 hover:shadow-[0_0_20px_rgba(255,215,0,0.1)] transition"
             >
               {/* ICON */}
               <div className="text-gold mb-4">{service.icon}</div>
@@ -92,7 +92,7 @@ export default function Services() {
                 {service.description}
               </p>
 
-              {/* BULLETS */}
+              {/* POINTS */}
               <ul className="text-gray-300 text-sm mb-6 space-y-1">
                 {service.points.map((point, i) => (
                   <li key={i}>• {point}</li>
@@ -102,7 +102,7 @@ export default function Services() {
               {/* CTA */}
               <div className="flex gap-4 items-center">
 
-                {/* 🔥 NOW DYNAMIC */}
+                {/* DETAILS */}
                 <Link
                   to={`/services/${service.slug}`}
                   className="text-gold text-sm hover:underline"
@@ -110,8 +110,9 @@ export default function Services() {
                   View Details →
                 </Link>
 
+                {/* 🔥 SMART CONTACT */}
                 <Link
-                  to="/contact"
+                  to={`/contact?service=${encodeURIComponent(service.title)}`}
                   className="text-sm text-gray-300 hover:text-white"
                 >
                   Consult Now →

@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
+import { servicesData } from "../data/servicesData"
 
 export default function ServicesPage() {
   return (
     <div className="bg-black text-white pt-28 pb-20 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
 
-        {/* PAGE HEADER */}
+        {/* HEADER */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gold mb-4">
             Healthcare Consulting Services
@@ -16,71 +17,62 @@ export default function ServicesPage() {
           </p>
         </div>
 
-        {/* SERVICE 1 */}
-        <motion.div className="mb-14 border border-gold/20 rounded-xl p-6">
-          <h2 className="text-2xl font-semibold text-gold mb-3">
-            NABH Accreditation & Compliance
-          </h2>
-          <p className="text-gray-400 mb-4">
-            We take your hospital from its current state to full NABH compliance with structured execution and continuous support.
-          </p>
-          <ul className="text-gray-300 space-y-2 mb-4">
-            <li>• Complete gap analysis</li>
-            <li>• SOP & documentation development</li>
-            <li>• Implementation support</li>
-            <li>• Mock audits before final inspection</li>
-          </ul>
-        </motion.div>
+        {/* SERVICES */}
+        <div className="space-y-10">
 
-        {/* SERVICE 2 */}
-        <motion.div className="mb-14 border border-gold/20 rounded-xl p-6">
-          <h2 className="text-2xl font-semibold text-gold mb-3">
-            Hospital Operations Optimization
-          </h2>
-          <p className="text-gray-400 mb-4">
-            We identify inefficiencies in your daily operations and fix them to improve patient flow, reduce delays, and increase efficiency.
-          </p>
-          <ul className="text-gray-300 space-y-2 mb-4">
-            <li>• Discharge delay reduction</li>
-            <li>• Workflow redesign</li>
-            <li>• Department coordination systems</li>
-            <li>• Performance tracking setup</li>
-          </ul>
-        </motion.div>
+          {servicesData.map((service, index) => (
+            <motion.div
+              key={service.slug}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition"
+            >
 
-        {/* SERVICE 3 */}
-        <motion.div className="mb-14 border border-gold/20 rounded-xl p-6">
-          <h2 className="text-2xl font-semibold text-gold mb-3">
-            Healthcare Business Growth
-          </h2>
-          <p className="text-gray-400 mb-4">
-            We help hospitals grow patient volume and revenue with structured strategies tailored to their market.
-          </p>
-          <ul className="text-gray-300 space-y-2 mb-4">
-            <li>• Branding & positioning</li>
-            <li>• Digital presence optimization</li>
-            <li>• Revenue growth strategies</li>
-            <li>• Local market expansion planning</li>
-          </ul>
-        </motion.div>
+              {/* TITLE */}
+              <h2 className="text-2xl font-semibold text-gold mb-3">
+                {service.title}
+              </h2>
 
-        {/* SERVICE 4 */}
-        <motion.div className="mb-14 border border-gold/20 rounded-xl p-6">
-          <h2 className="text-2xl font-semibold text-gold mb-3">
-            Healthcare Workforce Recruitment
-          </h2>
-          <p className="text-gray-400 mb-4">
-            We build strong non-clinical teams that ensure smooth hospital operations and better patient experience.
-          </p>
-          <ul className="text-gray-300 space-y-2 mb-4">
-            <li>• Front office & billing staff</li>
-            <li>• Operations & admin hiring</li>
-            <li>• PRO & support staff recruitment</li>
-            <li>• Workforce structuring</li>
-          </ul>
-        </motion.div>
+              {/* DESCRIPTION */}
+              <p className="text-gray-400 mb-4">
+                {service.description}
+              </p>
 
-        {/* CTA */}
+              {/* DETAILS */}
+              <ul className="text-gray-300 space-y-2 mb-6">
+                {service.details.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+
+              {/* CTA */}
+              <div className="flex gap-6 items-center">
+
+                {/* DETAILS PAGE */}
+                <Link
+                  to={`/services/${service.slug}`}
+                  className="text-gold hover:underline"
+                >
+                  View Details →
+                </Link>
+
+                {/* 🔥 SMART CONTACT */}
+                <Link
+                  to={`/contact?service=${encodeURIComponent(service.title)}`}
+                  className="text-gray-300 hover:text-white"
+                >
+                  Consult Now →
+                </Link>
+
+              </div>
+
+            </motion.div>
+          ))}
+
+        </div>
+
+        {/* GLOBAL CTA */}
         <div className="text-center mt-16">
           <Link
             to="/contact"
