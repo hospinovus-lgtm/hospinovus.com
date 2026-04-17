@@ -1,67 +1,105 @@
 import { useParams, Link } from "react-router-dom"
 import { servicesData } from "../data/servicesData"
-import { useEffect } from "react"
 
 export default function ServiceDetail() {
   const { slug } = useParams()
 
   const service = servicesData.find((s) => s.slug === slug)
 
-  // ✅ BASIC SEO (dynamic title)
-  useEffect(() => {
-    if (service) {
-      document.title = `${service.title} | HOSPINOVUS`
-    }
-  }, [service])
-
-  // ❌ BETTER NOT FOUND HANDLING
   if (!service) {
     return (
-      <div className="bg-black text-white h-screen flex flex-col items-center justify-center">
-        <h1 className="text-2xl text-gold mb-4">Service not found</h1>
-        <Link
-          to="/services"
-          className="text-gold underline"
-        >
-          Back to Services
-        </Link>
+      <div className="text-white p-20 text-center">
+        Service not found
       </div>
     )
   }
 
   return (
     <div className="bg-black text-white pt-28 pb-20 px-4 md:px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto space-y-16">
 
-        {/* TITLE */}
-        <h1 className="text-4xl font-bold text-gold mb-4">
-          {service.title}
-        </h1>
+        {/* HERO */}
+        <div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gold mb-4">
+            {service.title}
+          </h1>
+          <p className="text-gray-400">
+            {service.subtitle}
+          </p>
+        </div>
 
-        {/* DESCRIPTION */}
-        <p className="text-gray-400 mb-8 text-lg">
-          {service.description}
-        </p>
+        {/* PROBLEMS */}
+        {service.problems && (
+          <div>
+            <h2 className="text-2xl text-gold mb-4">Common Challenges</h2>
+            <ul className="space-y-2 text-gray-300">
+              {service.problems.map((p, i) => (
+                <li key={i}>• {p}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        {/* DETAILS */}
-        <ul className="space-y-3 mb-10 text-gray-300">
-          {service.details.map((item, index) => (
-            <li key={index}>• {item}</li>
-          ))}
-        </ul>
+        {/* PROCESS */}
+        {service.process && (
+          <div>
+            <h2 className="text-2xl text-gold mb-4">Our Approach</h2>
+            <ul className="space-y-2 text-gray-300">
+              {service.process.map((p, i) => (
+                <li key={i}>• {p}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        {/* 🔥 TRUST LINE */}
-        <p className="text-gray-500 text-sm mb-6">
-          Trusted by healthcare professionals across Kerala
-        </p>
+        {/* OUTCOMES */}
+        {service.outcomes && (
+          <div>
+            <h2 className="text-2xl text-gold mb-4">Expected Outcomes</h2>
+            <ul className="space-y-2 text-gray-300">
+              {service.outcomes.map((o, i) => (
+                <li key={i}>• {o}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        {/* 🔥 SMART CTA */}
-        <Link
-          to={`/contact?service=${encodeURIComponent(service.title)}`}
-          className="inline-block bg-gold text-black px-6 py-3 rounded-lg font-medium hover:shadow-[0_0_20px_rgba(255,215,0,0.5)] transition"
-        >
-          Book Free Consultation →
-        </Link>
+        {/* IDEAL CLIENT */}
+        {service.idealFor && (
+          <div>
+            <h2 className="text-2xl text-gold mb-4">Who This Is For</h2>
+            <ul className="space-y-2 text-gray-300">
+              {service.idealFor.map((iF, i) => (
+                <li key={i}>• {iF}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* FAQ */}
+        {service.faqs && (
+          <div>
+            <h2 className="text-2xl text-gold mb-6">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {service.faqs.map((faq, i) => (
+                <div key={i} className="border border-gold/20 p-4 rounded-lg">
+                  <p className="font-semibold text-gold">{faq.q}</p>
+                  <p className="text-gray-400 text-sm mt-2">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* CTA */}
+        <div className="text-center">
+          <Link
+            to={`/contact?service=${service.slug}`}
+            className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
+          >
+            Book NABH Consultation →
+          </Link>
+        </div>
 
       </div>
     </div>
