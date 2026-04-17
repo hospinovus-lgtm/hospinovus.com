@@ -1,3 +1,47 @@
+// 🔥 COMMON BLOCKS (USED ACROSS ALL SERVICES)
+export const commonBlocks = {
+  cta: {
+    primary: "Book NABH Readiness Assessment",
+  },
+
+  credibility: {
+    authority: [
+      { value: "10+", label: "Years Experience" },
+      { value: "50+", label: "Healthcare Network" },
+      { value: "100%", label: "Execution Focus" },
+    ],
+
+    whyChooseUs: [
+      "We don’t just consult — we execute on-ground",
+      "Department-wise implementation support",
+      "Real audit & operational preparation",
+      "Focus on long-term hospital stability",
+    ],
+
+    scenario: {
+      problem:
+        "A mid-size hospital struggled with delays, poor coordination, and lack of structured systems.",
+      action:
+        "We implemented SOPs, aligned departments, and introduced workflow clarity.",
+      result:
+        "Within months, operations stabilized, staff alignment improved, and audit readiness increased significantly.",
+    },
+
+    testimonial: {
+      quote:
+        "The biggest difference was clarity. Our team finally understood what needed to be done — and how to do it.",
+      author: "Hospital Administration Team",
+    },
+
+    riskReversal: {
+      title: "Start Without Commitment",
+      desc:
+        "Begin with a structured assessment and clear action plan before full engagement.",
+    },
+  },
+}
+
+// 🔥 SERVICES DATA
 export const servicesData = [
   {
     slug: "nabh",
@@ -47,7 +91,6 @@ export const servicesData = [
       },
     ],
 
-    // 🔗 INTERLINKING
     related: ["operations", "recruitment"],
   },
 
