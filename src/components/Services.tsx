@@ -6,50 +6,34 @@ const services = [
   {
     slug: "nabh",
     icon: <FaAward size={26} />,
-    title: "NABH Accreditation & Compliance",
+    title: "NABH Accreditation",
     description:
-      "End-to-end NABH preparation from gap analysis to final certification.",
-    points: [
-      "Detailed gap analysis",
-      "Documentation & SOP creation",
-      "Mock audits & implementation",
-    ],
+      "Struggling with compliance, documentation, or audit fear? We take your hospital to audit-ready.",
+    cta: "Start NABH Preparation",
   },
   {
     slug: "operations",
     icon: <FaHospital size={26} />,
-    title: "Hospital Operations Optimization",
+    title: "Operations Optimization",
     description:
-      "Fix inefficiencies in workflows, reduce delays, and improve patient experience.",
-    points: [
-      "Discharge & TAT optimization",
-      "Workflow restructuring",
-      "Operational monitoring systems",
-    ],
+      "Fix discharge delays, workflow gaps, and coordination issues across departments.",
+    cta: "Fix My Operations",
   },
   {
     slug: "growth",
     icon: <FaChartLine size={26} />,
-    title: "Healthcare Business Growth",
+    title: "Hospital Growth",
     description:
-      "Drive patient volume, branding, and sustainable revenue growth.",
-    points: [
-      "Local market positioning",
-      "Brand & digital strategy",
-      "Revenue optimization",
-    ],
+      "Increase patient flow, improve visibility, and drive predictable revenue growth.",
+    cta: "Increase Patient Flow",
   },
   {
     slug: "recruitment",
     icon: <FaUserTie size={26} />,
-    title: "Healthcare Workforce Recruitment",
+    title: "Workforce Recruitment",
     description:
-      "Build strong non-clinical teams that keep hospital operations running smoothly.",
-    points: [
-      "Front office & billing staff",
-      "Operations & admin hiring",
-      "PRO & support staff recruitment",
-    ],
+      "Build reliable front office, billing, and admin teams that actually perform.",
+    cta: "Build My Team",
   },
 ]
 
@@ -58,69 +42,80 @@ export default function Services() {
     <section className="bg-black text-white py-20 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
 
-        {/* HEADER */}
+        {/* 🔥 PROBLEM-FIRST HEADER */}
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">
-            Healthcare Consulting Services
+            Where Is Your Hospital Struggling Right Now?
           </h2>
+
           <p className="text-gray-400 max-w-2xl mx-auto">
-            We don’t just advise. We step in, execute, and transform how your hospital operates, grows, and scales.
+            Whether it’s NABH compliance, operational delays, low patient inflow,
+            or staffing issues — we step in and execute solutions.
           </p>
         </div>
 
         {/* GRID */}
         <div className="grid md:grid-cols-2 gap-8">
 
-          {services.map((service) => (
-            <motion.div
-              key={service.slug}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="border border-gold/20 rounded-2xl p-6 bg-gradient-to-br from-black to-[#1a1a1a] hover:border-gold/40 hover:shadow-[0_0_20px_rgba(255,215,0,0.1)] transition"
-            >
-              {/* ICON */}
-              <div className="text-gold mb-4">{service.icon}</div>
+          {services.map((service) => {
+            const whatsappMessage = `Hello HOSPINOVUS,
+I need help with ${service.title}.
+Please guide me.`
 
-              {/* TITLE */}
-              <h3 className="text-xl font-semibold text-gold mb-2">
-                {service.title}
-              </h3>
+            return (
+              <motion.div
+                key={service.slug}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="border border-gold/20 rounded-2xl p-6 bg-gradient-to-br from-black to-[#1a1a1a] hover:border-gold/40 hover:shadow-[0_0_20px_rgba(255,215,0,0.1)] transition"
+              >
 
-              {/* DESCRIPTION */}
-              <p className="text-gray-400 mb-4 text-sm">
-                {service.description}
-              </p>
+                {/* ICON */}
+                <div className="text-gold mb-4">{service.icon}</div>
 
-              {/* POINTS */}
-              <ul className="text-gray-300 text-sm mb-6 space-y-1">
-                {service.points.map((point, i) => (
-                  <li key={i}>• {point}</li>
-                ))}
-              </ul>
+                {/* TITLE */}
+                <h3 className="text-xl font-semibold text-gold mb-2">
+                  {service.title}
+                </h3>
 
-              {/* CTA */}
-              <div className="flex gap-4 items-center">
+                {/* DESCRIPTION */}
+                <p className="text-gray-400 mb-6 text-sm">
+                  {service.description}
+                </p>
 
-                {/* DETAILS */}
-                <Link
-                  to={`/services/${service.slug}`}
-                  className="text-gold text-sm hover:underline"
-                >
-                  View Details →
-                </Link>
+                {/* 🔥 ACTION ZONE */}
+                <div className="flex flex-wrap gap-4 items-center">
 
-                {/* 🔥 SMART CONTACT */}
-                <Link
-                  to={`/contact?service=${encodeURIComponent(service.title)}`}
-                  className="text-sm text-gray-300 hover:text-white"
-                >
-                  Consult Now →
-                </Link>
+                  {/* PRIMARY CTA */}
+                  <Link
+                    to={`/contact?service=${service.slug}`}
+                    className="bg-gold text-black px-4 py-2 rounded-lg text-sm font-medium"
+                  >
+                    {service.cta} →
+                  </Link>
 
-              </div>
-            </motion.div>
-          ))}
+                  {/* DETAILS */}
+                  <Link
+                    to={`/services/${service.slug}`}
+                    className="text-gold text-sm hover:underline"
+                  >
+                    Learn More →
+                  </Link>
+
+                  {/* WHATSAPP */}
+                  <a
+                    href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+                    target="_blank"
+                    className="text-green-400 text-sm hover:underline"
+                  >
+                    WhatsApp
+                  </a>
+
+                </div>
+              </motion.div>
+            )
+          })}
 
         </div>
       </div>
