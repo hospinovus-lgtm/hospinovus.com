@@ -9,18 +9,14 @@ export default function ServiceDetail() {
 
   const [showPopup, setShowPopup] = useState(false)
 
+  // CTA
   const getCTA = () => {
     switch (service?.slug) {
-      case "nabh":
-        return "Book NABH Gap Analysis"
-      case "operations":
-        return "Fix My Hospital Operations"
-      case "growth":
-        return "Increase Patient Footfall"
-      case "recruitment":
-        return "Build My Hospital Team"
-      default:
-        return "Book Consultation"
+      case "nabh": return "Book NABH Gap Analysis"
+      case "operations": return "Fix My Hospital Operations"
+      case "growth": return "Increase Patient Footfall"
+      case "recruitment": return "Build My Hospital Team"
+      default: return "Book Consultation"
     }
   }
 
@@ -30,49 +26,93 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
-  // 🔥 ELITE CASE STUDIES
+  // 🔥 INTERNAL LINKING (RESTORED)
+  const getInternalLinkingText = () => {
+    switch (service?.slug) {
+      case "nabh":
+        return (
+          <p className="text-gray-400 text-sm">
+            NABH success depends on{" "}
+            <Link to="/services/operations" className="text-gold underline">
+              structured operations
+            </Link>{" "}
+            and{" "}
+            <Link to="/services/recruitment" className="text-gold underline">
+              trained teams
+            </Link>.
+          </p>
+        )
+      case "operations":
+        return (
+          <p className="text-gray-400 text-sm">
+            Operations impact{" "}
+            <Link to="/services/nabh" className="text-gold underline">
+              NABH readiness
+            </Link>{" "}
+            and drive{" "}
+            <Link to="/services/growth" className="text-gold underline">
+              hospital growth
+            </Link>.
+          </p>
+        )
+      case "growth":
+        return (
+          <p className="text-gray-400 text-sm">
+            Growth requires{" "}
+            <Link to="/services/operations" className="text-gold underline">
+              strong operations
+            </Link>{" "}
+            and the right{" "}
+            <Link to="/services/recruitment" className="text-gold underline">
+              team
+            </Link>.
+          </p>
+        )
+      case "recruitment":
+        return (
+          <p className="text-gray-400 text-sm">
+            Hiring affects{" "}
+            <Link to="/services/operations" className="text-gold underline">
+              operations
+            </Link>{" "}
+            and{" "}
+            <Link to="/services/nabh" className="text-gold underline">
+              accreditation success
+            </Link>.
+          </p>
+        )
+      default:
+        return null
+    }
+  }
+
+  // 🔥 CASE STUDY (KEPT)
   const getCaseStudy = () => {
     switch (service?.slug) {
       case "nabh":
         return {
-          problem:
-            "A 60-bed hospital in Central Kerala was struggling with NABH preparation. Documentation existed, but staff were not aligned and audit fear was high.",
-          action:
-            "We restructured SOPs, trained department-wise teams, and conducted 2 mock audits with real scenarios.",
-          result:
-            "Within 4 months, the hospital achieved full audit readiness with zero major non-conformities.",
+          problem: "60-bed hospital struggled with audit readiness.",
+          action: "SOP restructuring + mock audits.",
+          result: "Achieved NABH readiness in 4 months.",
         }
-
       case "operations":
         return {
-          problem:
-            "A multi-speciality hospital in Kochi had discharge delays of 6–8 hours, causing patient dissatisfaction and bed blocking.",
-          action:
-            "We redesigned discharge workflow, aligned billing + pharmacy + nursing coordination, and introduced TAT tracking.",
-          result:
-            "Discharge time reduced to under 2 hours, improving patient turnover and satisfaction significantly.",
+          problem: "6–8 hour discharge delays.",
+          action: "Workflow + TAT system implemented.",
+          result: "Reduced to under 2 hours.",
         }
-
       case "growth":
         return {
-          problem:
-            "A newly established hospital had strong clinical capability but very low patient footfall due to poor positioning.",
-          action:
-            "We redefined service positioning, optimized Google presence, and aligned high-value services.",
-          result:
-            "Patient inflow increased by 40% within 3 months with improved revenue per patient.",
+          problem: "Low patient inflow.",
+          action: "Repositioning + digital alignment.",
+          result: "40% growth in 3 months.",
         }
-
       case "recruitment":
         return {
-          problem:
-            "A hospital faced high front-office staff turnover and poor patient interaction experience.",
-          action:
-            "We hired role-specific candidates and implemented structured onboarding with workflow-based training.",
-          result:
-            "Staff stability improved and patient experience scores increased noticeably within weeks.",
+          problem: "High staff turnover.",
+          action: "Structured hiring + onboarding.",
+          result: "Improved stability & experience.",
         }
-
       default:
         return null
     }
@@ -80,7 +120,7 @@ Please guide me on next steps.`
 
   const caseStudy = getCaseStudy()
 
-  // EXIT INTENT
+  // 🔥 EXIT POPUP (FULLY FIXED)
   useEffect(() => {
     let triggered = false
 
@@ -95,12 +135,12 @@ Please guide me on next steps.`
     let lastScroll = window.scrollY
 
     const handleScroll = () => {
-      const scrollPercent =
+      const percent =
         (window.scrollY /
           (document.body.scrollHeight - window.innerHeight)) *
         100
 
-      if (scrollPercent > 60 && window.scrollY < lastScroll && !triggered) {
+      if (percent > 60 && window.scrollY < lastScroll && !triggered) {
         triggered = true
         setShowPopup(true)
         track("Exit Popup Triggered", { service: service?.slug })
@@ -139,13 +179,11 @@ Please guide me on next steps.`
 
           {/* HERO */}
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold">
-              {service.title}
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold">{service.title}</h1>
 
-            <p className="text-gray-400 max-w-2xl">
-              {service.subtitle}
-            </p>
+            <p className="text-gray-400">{service.subtitle}</p>
+
+            {getInternalLinkingText()}
 
             <Link
               to={`/contact?service=${service.slug}`}
@@ -158,36 +196,26 @@ Please guide me on next steps.`
             </Link>
           </div>
 
-          {/* SECTIONS */}
           <Section title="Common Challenges" data={service.problems} />
           <Section title="Our Approach" data={service.process} />
           <Section title="Expected Outcomes" data={service.outcomes} />
           <Section title="Who This Is For" data={service.idealFor} />
 
-          {/* 🔥 CASE STUDY */}
+          {/* CASE */}
           {caseStudy && (
-            <div className="border border-gold/20 p-6 rounded-xl bg-zinc-900 space-y-4">
-              <h2 className="text-2xl text-gold">Real Case We Solved</h2>
-
-              <p className="text-gray-300 text-sm">
-                <strong className="text-gold">Problem:</strong> {caseStudy.problem}
-              </p>
-
-              <p className="text-gray-400 text-sm">
-                <strong className="text-gold">What We Did:</strong> {caseStudy.action}
-              </p>
-
-              <p className="text-gray-300 text-sm">
-                <strong className="text-gold">Result:</strong> {caseStudy.result}
-              </p>
+            <div className="border border-gold/20 p-6 rounded-xl bg-zinc-900">
+              <h2 className="text-gold text-xl mb-3">Real Case</h2>
+              <p><b>Problem:</b> {caseStudy.problem}</p>
+              <p><b>Action:</b> {caseStudy.action}</p>
+              <p><b>Result:</b> {caseStudy.result}</p>
             </div>
           )}
 
-          {/* AUTHORITY */}
+          {/* AUTH */}
           <div className="grid md:grid-cols-3 gap-6 text-center">
             {commonBlocks.credibility.authority.map((item, i) => (
               <div key={i} className="border border-gold/20 p-6 rounded-xl">
-                <p className="text-3xl text-gold font-bold">{item.value}</p>
+                <p className="text-3xl text-gold">{item.value}</p>
                 <p className="text-gray-400 text-sm">{item.label}</p>
               </div>
             ))}
@@ -196,19 +224,12 @@ Please guide me on next steps.`
           {/* RELATED */}
           {relatedServices.length > 0 && (
             <div>
-              <h2 className="text-2xl text-gold mb-6">Related Services</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {relatedServices.map((rs) => (
-                  <Link
-                    key={rs.slug}
-                    to={`/services/${rs.slug}`}
-                    className="border border-gold/20 p-6 rounded-xl"
-                  >
-                    <h3 className="text-gold">{rs.title}</h3>
-                    <p className="text-gray-400 text-sm">{rs.subtitle}</p>
-                  </Link>
-                ))}
-              </div>
+              <h2 className="text-gold text-2xl mb-4">Related</h2>
+              {relatedServices.map((rs) => (
+                <Link key={rs.slug} to={`/services/${rs.slug}`}>
+                  {rs.title}
+                </Link>
+              ))}
             </div>
           )}
 
@@ -218,28 +239,24 @@ Please guide me on next steps.`
               to={`/contact?service=${service.slug}`}
               className="bg-gold text-black px-8 py-3 rounded-lg"
             >
-              {ctaText} →
+              {ctaText}
             </Link>
           </div>
-
         </div>
 
-        {/* RIGHT FAQ */}
+        {/* FAQ */}
         {service.faqs?.length > 0 && (
           <div className="hidden md:block">
-            <div className="sticky top-28 space-y-4 border border-gold/20 p-6 rounded-xl bg-zinc-900">
-              <h2 className="text-gold">Quick Answers</h2>
-
+            <div className="sticky top-28 bg-zinc-900 p-6 rounded-xl">
               {service.faqs.map((faq, i) => (
                 <div key={i}>
-                  <p className="text-gold text-sm">{faq.q}</p>
-                  <p className="text-gray-400 text-xs">{faq.a}</p>
+                  <p className="text-gold">{faq.q}</p>
+                  <p className="text-gray-400">{faq.a}</p>
                 </div>
               ))}
             </div>
           </div>
         )}
-
       </div>
 
       {/* WHATSAPP */}
@@ -251,17 +268,42 @@ Please guide me on next steps.`
         💬
       </a>
 
+      {/* 🔥 EXIT POPUP WITH EMAIL RESTORED */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999]">
+          <div className="bg-zinc-900 p-8 rounded-xl text-center space-y-4">
+
+            <button onClick={() => setShowPopup(false)}>✕</button>
+
+            <h2 className="text-gold text-xl">Before You Leave...</h2>
+
+            <a href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}>
+              WhatsApp
+            </a>
+
+            <a href="tel:+918330016037">Call</a>
+
+            <a href={`mailto:hospinovus@gmail.com?subject=${service.title}`}>
+              Email
+            </a>
+
+            <Link to={`/contact?service=${service.slug}`}>
+              Get Plan
+            </Link>
+
+          </div>
+        </div>
+      )}
     </div>
   )
 }
 
 function Section({ title, data }: any) {
   if (!data?.length) return null
-
   return (
     <div>
-      <h2 className="text-2xl text-gold mb-4">{title}</h2>
-      <ul className="space-y-2 text-gray-300">
+      <h2 className="text-gold text-2xl">{title}</h2>
+      <ul>
         {data.map((item: string, i: number) => (
           <li key={i}>• {item}</li>
         ))}
