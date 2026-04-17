@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom"
-import { servicesData } from "../data/servicesData"
+import { servicesData, commonBlocks } from "../data/servicesData"
 import { useState, useEffect } from "react"
 
 export default function ServiceDetail() {
@@ -35,6 +35,11 @@ Please guide me on next steps.`
     )
   }
 
+  // 🔗 RELATED SERVICES
+  const relatedServices = servicesData.filter((s) =>
+    service.related?.includes(s.slug)
+  )
+
   return (
     <div className="bg-black text-white pt-28 pb-32 px-4 md:px-6">
       <div className="max-w-5xl mx-auto space-y-16">
@@ -60,15 +65,15 @@ Please guide me on next steps.`
           </div>
 
           <Link
-            to={`/contact?service=${service.title}`}
+            to={`/contact?service=${service.slug}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium inline-block"
           >
-            BOOK NABH READINESS ASSESSMENT →
+            {commonBlocks.cta.primary} →
           </Link>
         </div>
 
         {/* PROBLEMS */}
-        {service.problems && (
+        {service.problems?.length > 0 && (
           <div>
             <h2 className="text-2xl text-gold mb-4">Common Challenges</h2>
             <ul className="space-y-2 text-gray-300">
@@ -80,7 +85,7 @@ Please guide me on next steps.`
         )}
 
         {/* PROCESS */}
-        {service.process && (
+        {service.process?.length > 0 && (
           <div>
             <h2 className="text-2xl text-gold mb-4">Our Approach</h2>
             <ul className="space-y-2 text-gray-300">
@@ -92,7 +97,7 @@ Please guide me on next steps.`
         )}
 
         {/* OUTCOMES */}
-        {service.outcomes && (
+        {service.outcomes?.length > 0 && (
           <div>
             <h2 className="text-2xl text-gold mb-4">Expected Outcomes</h2>
             <ul className="space-y-2 text-gray-300">
@@ -104,7 +109,7 @@ Please guide me on next steps.`
         )}
 
         {/* IDEAL CLIENT */}
-        {service.idealFor && (
+        {service.idealFor?.length > 0 && (
           <div>
             <h2 className="text-2xl text-gold mb-4">Who This Is For</h2>
             <ul className="space-y-2 text-gray-300">
@@ -116,7 +121,7 @@ Please guide me on next steps.`
         )}
 
         {/* FAQ */}
-        {service.faqs && (
+        {service.faqs?.length > 0 && (
           <div>
             <h2 className="text-2xl text-gold mb-6">Frequently Asked Questions</h2>
             <div className="space-y-4">
@@ -132,69 +137,83 @@ Please guide me on next steps.`
 
         {/* AUTHORITY */}
         <div className="grid md:grid-cols-3 gap-6 text-center">
-          <div className="border border-gold/20 p-6 rounded-xl">
-            <p className="text-3xl font-bold text-gold">10+</p>
-            <p className="text-gray-400 text-sm mt-2">Years Experience</p>
-          </div>
-          <div className="border border-gold/20 p-6 rounded-xl">
-            <p className="text-3xl font-bold text-gold">50+</p>
-            <p className="text-gray-400 text-sm mt-2">Healthcare Network</p>
-          </div>
-          <div className="border border-gold/20 p-6 rounded-xl">
-            <p className="text-3xl font-bold text-gold">100%</p>
-            <p className="text-gray-400 text-sm mt-2">Execution Focus</p>
-          </div>
+          {commonBlocks.credibility.authority.map((item, i) => (
+            <div key={i} className="border border-gold/20 p-6 rounded-xl">
+              <p className="text-3xl font-bold text-gold">{item.value}</p>
+              <p className="text-gray-400 text-sm mt-2">{item.label}</p>
+            </div>
+          ))}
         </div>
 
-        {/* 🔥 CASE STORY */}
+        {/* CASE STORY */}
         <div>
           <h2 className="text-2xl text-gold mb-4">Real Scenario We Handle</h2>
           <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-3">
             <p className="text-gray-300 text-sm">
-              A 51-bed hospital approached us with delays in NABH preparation.
-              Documentation gaps, unclear staff roles, and audit anxiety were high.
+              {commonBlocks.credibility.scenario.problem}
             </p>
             <p className="text-gray-400 text-sm">
-              We implemented structured SOPs, aligned departments, and conducted mock audits.
+              {commonBlocks.credibility.scenario.action}
             </p>
             <p className="text-gray-300 text-sm">
-              Within months, the hospital achieved audit readiness with clarity and confidence.
+              {commonBlocks.credibility.scenario.result}
             </p>
           </div>
         </div>
 
-        {/* 🔥 TESTIMONIAL */}
+        {/* TESTIMONIAL */}
         <div>
           <h2 className="text-2xl text-gold mb-4">What Hospitals Experience</h2>
           <div className="border border-gold/20 p-6 rounded-xl">
             <p className="text-gray-300 italic">
-              “The biggest difference was clarity. Our team finally understood NABH.
-              The implementation support made everything practical.”
+              “{commonBlocks.credibility.testimonial.quote}”
             </p>
             <p className="text-gray-500 text-sm mt-3">
-              — Hospital Administration Team
+              — {commonBlocks.credibility.testimonial.author}
             </p>
           </div>
         </div>
 
-        {/* 🔥 RISK REVERSAL */}
+        {/* RISK REVERSAL */}
         <div className="border border-gold/20 p-6 rounded-xl text-center">
-          <h3 className="text-xl text-gold mb-3">Start Without Commitment</h3>
+          <h3 className="text-xl text-gold mb-3">
+            {commonBlocks.credibility.riskReversal.title}
+          </h3>
           <p className="text-gray-400 text-sm mb-4">
-            Begin with a structured gap analysis before committing to full implementation.
-          </p>
-          <p className="text-gray-300 text-sm">
-            You’ll know exactly where your hospital stands — no guesswork.
+            {commonBlocks.credibility.riskReversal.desc}
           </p>
         </div>
+
+        {/* 🔗 RELATED SERVICES */}
+        {relatedServices.length > 0 && (
+          <div>
+            <h2 className="text-2xl text-gold mb-6">Related Services</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {relatedServices.map((rs) => (
+                <Link
+                  key={rs.slug}
+                  to={`/services/${rs.slug}`}
+                  className="border border-gold/20 p-6 rounded-xl hover:border-gold/40 transition"
+                >
+                  <h3 className="text-lg text-gold font-semibold mb-2">
+                    {rs.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    {rs.subtitle}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* CTA */}
         <div className="text-center">
           <Link
-            to={`/contact?service=${service.title}`}
+            to={`/contact?service=${service.slug}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
           >
-            BOOK NABH READINESS ASSESSMENT →
+            {commonBlocks.cta.primary} →
           </Link>
         </div>
 
@@ -204,7 +223,7 @@ Please guide me on next steps.`
       <div className="fixed bottom-0 left-0 w-full bg-black border-t border-gold/20 p-4 flex justify-between items-center z-50">
         <p className="text-sm text-gray-300">Need help?</p>
         <Link
-          to={`/contact?service=${service.title}`}
+          to={`/contact?service=${service.slug}`}
           className="bg-gold text-black px-4 py-2 rounded-lg text-sm"
         >
           Get Started →
@@ -224,7 +243,9 @@ Please guide me on next steps.`
       {showPopup && (
         <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999] px-4">
           <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
-            <button onClick={() => setShowPopup(false)} className="absolute top-3 right-4">✕</button>
+            <button onClick={() => setShowPopup(false)} className="absolute top-3 right-4">
+              ✕
+            </button>
 
             <h2 className="text-2xl text-gold font-bold">
               Need Help with {service.title}?
@@ -239,18 +260,20 @@ Please guide me on next steps.`
                 Call
               </a>
 
-              <a href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}`} className="bg-gray-700 block py-3 rounded-lg">
+              <a
+                href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}`}
+                className="bg-gray-700 block py-3 rounded-lg"
+              >
                 Email
               </a>
 
-              <Link to={`/contact?service=${service.title}`} className="bg-gold text-black block py-3 rounded-lg">
+              <Link to={`/contact?service=${service.slug}`} className="bg-gold text-black block py-3 rounded-lg">
                 Form
               </Link>
             </div>
           </div>
         </div>
       )}
-
     </div>
   )
 }
