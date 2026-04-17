@@ -22,10 +22,11 @@ export default function Contact() {
     message: "",
   })
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<"" | "success" | "error">("")
   const [loading, setLoading] = useState(false)
 
-  // ✅ PREFILL FROM SERVICE
+  // PREFILL FROM SERVICE
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const service = params.get("service")
@@ -45,9 +46,14 @@ export default function Contact() {
       ...formData,
       [e.target.name]: e.target.value,
     })
+
+    // 🔥 CLEAR ERROR ON CHANGE
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+    }))
   }
 
-  // 🔥 REAL BACKEND SUBMIT
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -55,31 +61,35 @@ export default function Contact() {
 
     setLoading(true)
     setStatus("")
+    setErrors({})
 
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       })
 
-      if (res.ok) {
-        setStatus("success")
+      const data = await res.json()
 
-        // Reset form after success
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          organization: "",
-          message: "",
-        })
-
-      } else {
+      if (!res.ok) {
+        // 🔥 SHOW FIELD ERRORS
+        setErrors(data.errors || {})
         setStatus("error")
+        return
       }
+
+      setStatus("success")
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        organization: "",
+        message: "",
+      })
 
     } catch (err) {
       console.error(err)
@@ -89,7 +99,6 @@ export default function Contact() {
     }
   }
 
-  // 🔗 CONTACT LINKS
   const whatsappLink = `https://wa.me/918330016037?text=${encodeURIComponent(
     `Hello HOSPINOVUS,
 Name: ${formData.name}
@@ -102,7 +111,7 @@ Requirement: ${formData.message}`
     <div className="bg-black text-white pt-28 pb-20 px-4 md:px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
 
-        {/* LEFT SIDE */}
+        {/* LEFT */}
         <div>
           <h1 className="text-3xl md:text-5xl font-bold text-gold mb-6">
             Book a Free Consultation
@@ -133,73 +142,79 @@ Requirement: ${formData.message}`
           className="space-y-4"
         >
 
-          <input
-            name="name"
-            placeholder="Your Name"
-            required
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20 focus:border-gold outline-none"
-          />
+          {/* NAME */}
+          <div>
+            <input
+              name="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+            />
+            {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+          </div>
 
-          <input
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20 focus:border-gold outline-none"
-          />
+          {/* EMAIL */}
+          <div>
+            <input
+              name="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+            />
+            {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+          </div>
 
-          <input
-            name="phone"
-            placeholder="Phone Number"
-            required
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20 focus:border-gold outline-none"
-          />
+          {/* PHONE */}
+          <div>
+            <input
+              name="phone"
+              placeholder="Phone Number"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+            />
+            {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
+          </div>
 
-          <input
-            name="organization"
-            placeholder="Hospital / Organization"
-            required
-            value={formData.organization}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20 focus:border-gold outline-none"
-          />
+          {/* ORGANIZATION */}
+          <div>
+            <input
+              name="organization"
+              placeholder="Hospital / Organization"
+              value={formData.organization}
+              onChange={handleChange}
+              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+            />
+            {errors.organization && <p className="text-red-400 text-sm mt-1">{errors.organization}</p>}
+          </div>
 
-          <textarea
-            name="message"
-            placeholder="Tell us your requirement"
-            required
-            rows={4}
-            value={formData.message}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20 focus:border-gold outline-none"
-          />
+          {/* MESSAGE */}
+          <div>
+            <textarea
+              name="message"
+              placeholder="Tell us your requirement"
+              rows={4}
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+            />
+            {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gold text-black py-3 rounded-lg font-medium hover:shadow-[0_0_20px_rgba(255,215,0,0.5)] transition"
+            className="w-full bg-gold text-black py-3 rounded-lg"
           >
             {loading ? "Submitting..." : "Book Free Consultation"}
           </button>
 
           {/* STATUS */}
-          {status && (
+          {status === "success" && (
             <div className="mt-6 p-4 border rounded-lg text-center space-y-3">
-              {status === "success" ? (
-                <p className="text-green-400">✅ Request submitted successfully</p>
-              ) : (
-                <p className="text-red-400">❌ Submission failed. Try again or contact directly.</p>
-              )}
-
-              <p className="text-gray-400 text-sm">
-                You can also contact us directly:
-              </p>
+              <p className="text-green-400">✅ Request submitted successfully</p>
 
               <div className="flex justify-center gap-6 text-2xl">
                 <a href="tel:+918330016037" className="text-gold">

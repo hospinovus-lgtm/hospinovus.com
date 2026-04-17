@@ -9,7 +9,7 @@ type Lead = {
   message: string
 }
 
-// ✅ INIT SUPABASE (BACKEND SAFE)
+// ✅ INIT SUPABASE
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_ANON_KEY!
@@ -25,23 +25,34 @@ export default async function handler(
 
   try {
     const body = req.body as Lead
-
     const { name, email, phone, organization, message } = body
 
-    // 🔒 BASIC VALIDATION
-    if (!name || !email || !phone || !organization || !message) {
-      return res.status(400).json({ error: "All fields are required" })
-    }
+    // ✅ COLLECT ALL ERRORS
+    const errors: Record<string, string> = {}
 
-    // 🔒 EMAIL VALIDATION (MINIMUM LEVEL)
+    if (!name) errors.name = "Name is required"
+    if (!email) errors.email = "Email is required"
+    if (!phone) errors.phone = "Phone is required"
+    if (!organization) errors.organization = "Organization is required"
+    if (!message) errors.message = "Message is required"
+
+    // ✅ EMAIL VALIDATION
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: "Invalid email" })
+    if (email && !emailRegex.test(email)) {
+      errors.email = "Enter a valid email address"
     }
 
-    // 🔒 PHONE VALIDATION (basic)
-    if (phone.length < 10) {
-      return res.status(400).json({ error: "Invalid phone number" })
+    // ✅ PHONE VALIDATION (STRICT)
+    if (phone && phone.length < 10) {
+      errors.phone = "Enter a valid 10-digit phone number"
+    }
+
+    // 🚨 RETURN ALL ERRORS AT ONCE
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({
+        success: false,
+        errors,
+      })
     }
 
     // 🚀 INSERT INTO SUPABASE
