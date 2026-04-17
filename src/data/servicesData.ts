@@ -3,7 +3,7 @@ export const servicesData = [
     slug: "nabh",
     title: "NABH Accreditation Support for Hospitals in Kerala",
     subtitle:
-      "End-to-end NABH consulting — from gap analysis to final certification with structured execution.",
+      "End-to-end NABH consulting — from gap analysis to final certification with structured, on-ground execution.",
 
     problems: [
       "Delayed discharge summaries and documentation gaps",
@@ -20,9 +20,9 @@ export const servicesData = [
     ],
 
     outcomes: [
-      "Faster NABH accreditation approval",
+      "Faster NABH accreditation approval timeline",
       "Reduced audit risk and compliance errors",
-      "Standardized hospital operations",
+      "Standardized and audit-ready hospital operations",
       "Improved patient safety and documentation quality",
     ],
 
@@ -35,21 +35,27 @@ export const servicesData = [
     faqs: [
       {
         q: "How long does NABH accreditation take?",
-        a: "Typically 3 to 6 months depending on hospital readiness.",
+        a: "Typically 3 to 6 months depending on hospital readiness, documentation, and team alignment.",
       },
       {
         q: "Do you support full NABH implementation?",
-        a: "Yes, from gap analysis to final audit preparation.",
+        a: "Yes, we handle everything from gap analysis to final audit preparation with execution support.",
+      },
+      {
+        q: "What is the biggest reason hospitals fail NABH audits?",
+        a: "Lack of system implementation and staff alignment — not documentation alone.",
       },
     ],
+
+    // 🔗 INTERLINKING
+    related: ["operations", "recruitment"],
   },
 
-  // 🔥 OPERATIONS (FULLY UPGRADED)
   {
     slug: "operations",
     title: "Hospital Operations Optimization",
     subtitle:
-      "Fix inefficiencies, reduce discharge delays, and create a smooth patient flow system.",
+      "Fix inefficiencies, reduce discharge delays, and build a smooth, scalable patient flow system.",
 
     problems: [
       "Long discharge times frustrating patients",
@@ -66,10 +72,10 @@ export const servicesData = [
     ],
 
     outcomes: [
-      "Faster discharge turnaround time (TAT)",
-      "Improved patient satisfaction",
-      "Better staff coordination",
-      "Data-driven operational control",
+      "Reduced discharge turnaround time (TAT)",
+      "Improved patient satisfaction scores",
+      "Better inter-department coordination",
+      "Data-driven operational visibility",
     ],
 
     idealFor: [
@@ -81,33 +87,38 @@ export const servicesData = [
     faqs: [
       {
         q: "Can you reduce discharge delays?",
-        a: "Yes, we redesign the entire discharge workflow for speed and clarity.",
+        a: "Yes, we redesign workflows and remove bottlenecks across departments.",
       },
       {
         q: "Do you implement systems or just advise?",
-        a: "We execute on-ground, not just consult.",
+        a: "We execute on-ground — not just consulting slides.",
+      },
+      {
+        q: "Will this require software changes?",
+        a: "Not always. We optimize processes first, then align tools if needed.",
       },
     ],
+
+    related: ["nabh", "recruitment", "growth"],
   },
 
-  // 🔥 GROWTH (FULLY UPGRADED)
   {
     slug: "growth",
     title: "Healthcare Business Growth",
     subtitle:
-      "Increase patient volume, strengthen brand positioning, and drive sustainable revenue growth.",
+      "Increase patient volume, strengthen positioning, and drive predictable revenue growth.",
 
     problems: [
       "Low patient footfall despite good clinical care",
-      "Weak online presence",
-      "No clear market positioning",
+      "Weak online and local visibility",
+      "No clear hospital positioning",
       "Revenue stagnation",
     ],
 
     process: [
       "Local market and competitor analysis",
-      "Brand positioning strategy for your hospital",
-      "Digital presence optimization (Google, social, SEO)",
+      "Hospital positioning and brand clarity",
+      "Digital presence optimization (Google, SEO, social)",
       "Revenue and service mix optimization",
     ],
 
@@ -115,11 +126,11 @@ export const servicesData = [
       "Increased patient inflow",
       "Stronger local brand recognition",
       "Higher revenue per patient",
-      "Sustainable long-term growth",
+      "Sustainable growth systems",
     ],
 
     idealFor: [
-      "Hospitals struggling with low visibility",
+      "Hospitals struggling with visibility",
       "New hospitals entering competitive markets",
       "Facilities aiming to scale revenue",
     ],
@@ -127,21 +138,26 @@ export const servicesData = [
     faqs: [
       {
         q: "Do you run ads for hospitals?",
-        a: "We focus on structured growth strategy, not just ads.",
+        a: "We focus on long-term growth systems, not just short-term ads.",
       },
       {
         q: "Will this increase patient numbers?",
-        a: "Yes, through positioning + visibility + conversion improvements.",
+        a: "Yes — through better positioning, visibility, and conversion strategy.",
+      },
+      {
+        q: "How is this different from marketing agencies?",
+        a: "We align growth with hospital operations — not just promotions.",
       },
     ],
+
+    related: ["operations", "recruitment"],
   },
 
-  // 🔥 RECRUITMENT (FULLY UPGRADED)
   {
     slug: "recruitment",
     title: "Healthcare Workforce Recruitment",
     subtitle:
-      "Build reliable non-clinical teams that keep hospital operations efficient and patient-friendly.",
+      "Build reliable non-clinical teams that keep operations smooth and patient experience strong.",
 
     problems: [
       "High staff turnover",
@@ -161,7 +177,7 @@ export const servicesData = [
       "Stronger front office and admin teams",
       "Improved patient experience",
       "Reduced hiring risk",
-      "More stable operations",
+      "More stable day-to-day operations",
     ],
 
     idealFor: [
@@ -173,12 +189,18 @@ export const servicesData = [
     faqs: [
       {
         q: "Do you recruit clinical staff?",
-        a: "Our focus is on non-clinical and operational roles.",
+        a: "Our primary focus is non-clinical and operational roles.",
       },
       {
         q: "Do you provide training?",
-        a: "Yes, we can support onboarding and operational training.",
+        a: "Yes, we support onboarding and operational readiness training.",
+      },
+      {
+        q: "How do you ensure candidate quality?",
+        a: "Through structured screening aligned with hospital workflow needs.",
       },
     ],
+
+    related: ["operations", "growth", "nabh"],
   },
 ]
