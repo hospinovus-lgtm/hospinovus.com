@@ -1,6 +1,7 @@
+<SplashScreen />
 import { Routes, Route, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
-
+import SplashScreen from "./components/SplashScreen"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import PageLoader from "./components/PageLoader"
