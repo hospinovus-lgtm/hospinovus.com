@@ -1,4 +1,4 @@
-// 🔥 COMMON BLOCKS (USED ACROSS ALL SERVICES)
+// 🔥 COMMON BLOCKS (UNCHANGED)
 export const commonBlocks = {
   cta: {
     primary: "Book NABH Readiness Assessment",
@@ -41,7 +41,7 @@ export const commonBlocks = {
   },
 }
 
-// 🔥 SERVICES DATA
+// 🔥 SERVICES DATA (ONLY FAQS EXPANDED)
 export const servicesData = [
   {
     slug: "nabh",
@@ -88,6 +88,16 @@ export const servicesData = [
       {
         q: "What is the biggest reason hospitals fail NABH audits?",
         a: "Lack of system implementation and staff alignment — not documentation alone.",
+      },
+
+      // ➕ ADDED
+      {
+        q: "Do you conduct mock audits?",
+        a: "Yes, we simulate real audit scenarios to prepare your team before final assessment.",
+      },
+      {
+        q: "Will you guide department-wise implementation?",
+        a: "Yes, we work with each department to ensure practical implementation of NABH standards.",
       },
     ],
 
@@ -140,6 +150,16 @@ export const servicesData = [
         q: "Will this require software changes?",
         a: "Not always. We optimize processes first, then align tools if needed.",
       },
+
+      // ➕ ADDED
+      {
+        q: "Will this affect current staff workflow?",
+        a: "We optimize workflows without disrupting daily operations.",
+      },
+      {
+        q: "Do you provide tracking systems?",
+        a: "Yes, we introduce basic monitoring and KPI tracking methods.",
+      },
     ],
 
     related: ["nabh", "recruitment", "growth"],
@@ -191,6 +211,16 @@ export const servicesData = [
         q: "How is this different from marketing agencies?",
         a: "We align growth with hospital operations — not just promotions.",
       },
+
+      // ➕ ADDED
+      {
+        q: "Do you help with Google visibility?",
+        a: "Yes, we optimize your hospital’s presence for better local discoverability.",
+      },
+      {
+        q: "Is this suitable for small hospitals?",
+        a: "Yes, especially for hospitals trying to improve visibility and patient flow.",
+      },
     ],
 
     related: ["operations", "recruitment"],
@@ -241,6 +271,16 @@ export const servicesData = [
       {
         q: "How do you ensure candidate quality?",
         a: "Through structured screening aligned with hospital workflow needs.",
+      },
+
+      // ➕ ADDED
+      {
+        q: "Do you help with onboarding?",
+        a: "Yes, we guide initial onboarding to align staff with workflows.",
+      },
+      {
+        q: "How fast can hiring be done?",
+        a: "Timelines vary, but we focus on quality over speed to ensure the right fit.",
       },
     ],
 

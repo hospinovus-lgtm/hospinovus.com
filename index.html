@@ -1,13 +1,125 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- 🔥 BASIC -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hospinovus.com</title>
+
+    <title>HOSPINOVUS | Hospital Operations & NABH Consulting</title>
+
+    <meta
+      name="description"
+      content="HOSPINOVUS helps hospitals improve operations, achieve NABH accreditation, and drive growth through structured execution."
+    />
+
+    <!-- 🔥 FAVICON -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+
+    <!-- 🔥 OPEN GRAPH -->
+    <meta property="og:title" content="HOSPINOVUS | Fix Your Hospital Systems" />
+    <meta
+      property="og:description"
+      content="Struggling with NABH, operations, or growth? We help hospitals execute — not just advise."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hospinovus.com" />
+    <meta property="og:image" content="https://hospinovus.com/og-image.jpg" />
+
+    <!-- 🔥 TWITTER -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="HOSPINOVUS | Hospital Operations & NABH Consulting"
+    />
+    <meta
+      name="twitter:description"
+      content="We fix hospital operations, NABH compliance, and growth bottlenecks."
+    />
+    <meta
+      name="twitter:image"
+      content="https://hospinovus.com/og-image.jpg"
+    />
+
+    <!-- 🔥 THEME -->
+    <meta name="theme-color" content="#000000" />
+
+    <!-- 🔥 KEYWORDS -->
+    <meta
+      name="keywords"
+      content="NABH consultancy Kerala, hospital management consulting India, hospital operations improvement, healthcare business growth, hospital recruitment Kerala"
+    />
+
+    <!-- 🔥 LOADER STYLE -->
+    <style>
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: black;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease;
+      }
+
+      .loader-content {
+        text-align: center;
+        color: #d4af37;
+      }
+
+      .loader-logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 16px;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.7; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+
+      .loader-content h1 {
+        font-size: 20px;
+        margin-bottom: 6px;
+      }
+
+      .loader-content p {
+        font-size: 10px;
+        color: #aaa;
+      }
+    </style>
   </head>
+
   <body>
+    <!-- 🔥 LOADING SCREEN -->
+    <div id="loader">
+      <div class="loader-content">
+        <img src="/logo.png" class="loader-logo" />
+        <h1>HOSPINOVUS</h1>
+        <p>YOU OWN WE MANAGE</p>
+      </div>
+    </div>
+
+    <!-- REACT ROOT -->
     <div id="root"></div>
+
+    <!-- REACT ENTRY -->
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- 🔥 LOADER SCRIPT -->
+    <script>
+      window.addEventListener("load", () => {
+        const loader = document.getElementById("loader")
+
+        loader.style.opacity = "0"
+        loader.style.pointerEvents = "none"
+
+        setTimeout(() => {
+          loader.style.display = "none"
+        }, 500)
+      })
+    </script>
   </body>
 </html>

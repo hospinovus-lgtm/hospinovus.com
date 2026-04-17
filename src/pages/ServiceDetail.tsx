@@ -26,7 +26,7 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
-  // 🔗 INTERNAL LINKING
+  // 🔗 INTERNAL LINKING (UNCHANGED)
   const getInternalLinkingText = () => {
     switch (service?.slug) {
       case "nabh":
@@ -70,10 +70,10 @@ Please guide me on next steps.`
     }
   }
 
-  // 🔥 CASE STUDY
+  // 🔥 CASE STUDY (UNCHANGED SOURCE)
   const caseStudy = commonBlocks.credibility.scenario
 
-  // 🚨 EXIT INTENT
+  // 🚨 EXIT INTENT (UNCHANGED LOGIC)
   useEffect(() => {
     let triggered = false
 
@@ -161,21 +161,23 @@ Please guide me on next steps.`
           <Section title="Who This Is For" data={service.idealFor} />
 
           {/* CASE STUDY */}
-          <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-4">
-            <h2 className="text-2xl text-gold">Real Scenario We Handle</h2>
+          {caseStudy && (
+            <div className="border border-gold/20 p-6 rounded-xl bg-gradient-to-br from-black to-[#1a1a1a] space-y-4">
+              <h2 className="text-2xl text-gold">Real Scenario We Handle</h2>
 
-            <p className="text-gray-300 text-sm">
-              <span className="text-gold font-semibold">Problem:</span> {caseStudy.problem}
-            </p>
+              <p className="text-gray-300 text-sm">
+                <span className="text-gold font-semibold">Problem:</span> {caseStudy.problem}
+              </p>
 
-            <p className="text-gray-400 text-sm">
-              <span className="text-gold font-semibold">What We Did:</span> {caseStudy.action}
-            </p>
+              <p className="text-gray-400 text-sm">
+                <span className="text-gold font-semibold">What We Did:</span> {caseStudy.action}
+              </p>
 
-            <p className="text-gray-300 text-sm">
-              <span className="text-gold font-semibold">Result:</span> {caseStudy.result}
-            </p>
-          </div>
+              <p className="text-gray-300 text-sm">
+                <span className="text-gold font-semibold">Result:</span> {caseStudy.result}
+              </p>
+            </div>
+          )}
 
           {/* AUTHORITY */}
           <div className="grid md:grid-cols-3 gap-6 text-center">
@@ -284,9 +286,7 @@ Please guide me on next steps.`
 
               <a
                 href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
-                onClick={() =>
-                  track("Exit WhatsApp Click", { service: service.slug })
-                }
+                onClick={() => track("Exit WhatsApp Click", { service: service.slug })}
                 className="bg-green-500 block py-3 rounded-lg"
               >
                 💬 WhatsApp
@@ -294,9 +294,7 @@ Please guide me on next steps.`
 
               <a
                 href="tel:+918330016037"
-                onClick={() =>
-                  track("Exit Call Click", { service: service.slug })
-                }
+                onClick={() => track("Exit Call Click", { service: service.slug })}
                 className="bg-blue-500 block py-3 rounded-lg"
               >
                 📞 Call
@@ -304,9 +302,7 @@ Please guide me on next steps.`
 
               <a
                 href={`mailto:hospinovus@gmail.com?subject=${service.title}`}
-                onClick={() =>
-                  track("Exit Email Click", { service: service.slug })
-                }
+                onClick={() => track("Exit Email Click", { service: service.slug })}
                 className="bg-gray-700 block py-3 rounded-lg"
               >
                 ✉ Email
@@ -314,9 +310,7 @@ Please guide me on next steps.`
 
               <Link
                 to={`/contact?service=${service.slug}`}
-                onClick={() =>
-                  track("Exit CTA Click", { service: service.slug })
-                }
+                onClick={() => track("Exit CTA Click", { service: service.slug })}
                 className="bg-gold text-black block py-3 rounded-lg"
               >
                 📋 Get Action Plan
