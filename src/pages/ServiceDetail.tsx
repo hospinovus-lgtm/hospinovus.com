@@ -4,12 +4,11 @@ import { useState, useEffect } from "react"
 
 export default function ServiceDetail() {
   const { slug } = useParams()
-
   const service = servicesData.find((s) => s.slug === slug)
 
   const [showPopup, setShowPopup] = useState(false)
 
-  // ✅ SERVICE-SPECIFIC CTA
+  // ✅ CTA PER SERVICE
   const getCTA = () => {
     switch (service?.slug) {
       case "nabh":
@@ -31,12 +30,11 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
-  // 🔥 FIXED EXIT INTENT SYSTEM
+  // 🔥 EXIT INTENT SYSTEM (FIXED)
   useEffect(() => {
     let hasTriggered = false
 
     const timer = setTimeout(() => {
-      // 🖥️ Desktop exit (mouse to top)
       const handleMouseLeave = (e: MouseEvent) => {
         if (e.clientY <= 10 && !hasTriggered) {
           hasTriggered = true
@@ -44,7 +42,6 @@ Please guide me on next steps.`
         }
       }
 
-      // 📱 Mobile fallback (scroll intent)
       let lastScroll = window.scrollY
 
       const handleScroll = () => {
@@ -78,11 +75,7 @@ Please guide me on next steps.`
   }, [])
 
   if (!service) {
-    return (
-      <div className="text-white p-20 text-center">
-        Service not found
-      </div>
-    )
+    return <div className="text-white p-20 text-center">Service not found</div>
   }
 
   const relatedServices = servicesData.filter((s) =>
@@ -95,11 +88,9 @@ Please guide me on next steps.`
 
         {/* HERO */}
         <div className="space-y-6">
-          <p className="text-sm text-gold uppercase tracking-wide">
-            {service.title}
-          </p>
+          <p className="text-sm text-gold uppercase">{service.title}</p>
 
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold">
             {service.title}
           </h1>
 
@@ -107,11 +98,17 @@ Please guide me on next steps.`
             {service.subtitle}
           </p>
 
-          <div className="flex flex-wrap gap-4 text-sm text-gray-300">
-            <span>✔ Structured implementation</span>
-            <span>✔ Department-level execution</span>
-            <span>✔ Audit-focused approach</span>
-          </div>
+          {/* 🔥 INLINE INTERNAL LINKING */}
+          <p className="text-gray-400 text-sm">
+            Many hospitals fail to achieve results because{" "}
+            <Link to="/services/operations" className="text-gold underline">
+              operations are not structured
+            </Link>{" "}
+            or teams are not aligned through{" "}
+            <Link to="/services/recruitment" className="text-gold underline">
+              proper workforce systems
+            </Link>.
+          </p>
 
           <Link
             to={`/contact?service=${service.slug}`}
@@ -188,11 +185,30 @@ Please guide me on next steps.`
         <div className="grid md:grid-cols-3 gap-6 text-center">
           {commonBlocks.credibility.authority.map((item, i) => (
             <div key={i} className="border border-gold/20 p-6 rounded-xl">
-              <p className="text-3xl font-bold text-gold">{item.value}</p>
-              <p className="text-gray-400 text-sm mt-2">{item.label}</p>
+              <p className="text-3xl text-gold font-bold">{item.value}</p>
+              <p className="text-gray-400 text-sm">{item.label}</p>
             </div>
           ))}
         </div>
+
+        {/* 🔗 RELATED SERVICES */}
+        {relatedServices.length > 0 && (
+          <div>
+            <h2 className="text-2xl text-gold mb-6">Related Services</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {relatedServices.map((rs) => (
+                <Link
+                  key={rs.slug}
+                  to={`/services/${rs.slug}`}
+                  className="border border-gold/20 p-6 rounded-xl hover:border-gold/40"
+                >
+                  <h3 className="text-gold font-semibold">{rs.title}</h3>
+                  <p className="text-gray-400 text-sm mt-2">{rs.subtitle}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* CTA */}
         <div className="text-center">
@@ -203,7 +219,6 @@ Please guide me on next steps.`
             {ctaText} →
           </Link>
         </div>
-
       </div>
 
       {/* STICKY CTA */}
@@ -217,7 +232,7 @@ Please guide me on next steps.`
         </Link>
       </div>
 
-      {/* WHATSAPP */}
+      {/* WHATSAPP FLOAT */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
         target="_blank"
@@ -226,9 +241,9 @@ Please guide me on next steps.`
         💬
       </a>
 
-      {/* 🔥 EXIT MODAL */}
+      {/* 🔥 EXIT POPUP (OPTIMIZED) */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[999] px-4">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[999] px-4">
           <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
 
             <button
@@ -238,46 +253,49 @@ Please guide me on next steps.`
               ✕
             </button>
 
-            <h2 className="text-2xl text-gold font-bold">
-              Need Help with {service.title}?
+            <h2 className="text-2xl font-bold text-gold">
+              Before You Leave...
             </h2>
+
+            <p className="text-gray-300 text-sm">
+              Hospitals struggle with delays, compliance gaps, and inefficiencies.
+              We can quickly identify what’s holding you back.
+            </p>
+
+            <p className="text-gray-400 text-sm">
+              Let’s discuss <span className="text-gold">{service.title}</span>
+            </p>
 
             <div className="space-y-3">
 
               <a
                 href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
                 target="_blank"
-                className="bg-green-500 block py-3 rounded-lg"
+                className="bg-green-500 block py-3 rounded-lg font-medium"
               >
-                WhatsApp
+                💬 WhatsApp (Fastest)
               </a>
 
-              <a
-                href="tel:+918330016037"
-                className="bg-blue-500 block py-3 rounded-lg"
-              >
-                Call
-              </a>
-
-              <a
-                href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}`}
-                className="bg-gray-700 block py-3 rounded-lg"
-              >
-                Email
+              <a href="tel:+918330016037" className="bg-blue-500 block py-3 rounded-lg">
+                📞 Call Now
               </a>
 
               <Link
                 to={`/contact?service=${service.slug}`}
-                className="bg-gold text-black block py-3 rounded-lg"
+                className="bg-gold text-black block py-3 rounded-lg font-semibold"
               >
-                Fill Form
+                📋 Get Action Plan
               </Link>
 
             </div>
+
+            <p className="text-gray-500 text-xs">
+              No spam. Just clarity for your hospital.
+            </p>
+
           </div>
         </div>
       )}
-
     </div>
   )
 }
