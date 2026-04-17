@@ -1,5 +1,6 @@
 import { VercelRequest, VercelResponse } from "@vercel/node"
 import { createClient } from "@supabase/supabase-js"
+import { Resend } from "resend"
 
 type Lead = {
   name: string
@@ -14,6 +15,9 @@ const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_ANON_KEY!
 )
+
+// ✅ INIT RESEND
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export default async function handler(
   req: VercelRequest,
@@ -42,12 +46,12 @@ export default async function handler(
       errors.email = "Enter a valid email address"
     }
 
-    // ✅ PHONE VALIDATION (STRICT)
+    // ✅ PHONE VALIDATION
     if (phone && phone.length < 10) {
       errors.phone = "Enter a valid 10-digit phone number"
     }
 
-    // 🚨 RETURN ALL ERRORS AT ONCE
+    // 🚨 RETURN ALL ERRORS
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({
         success: false,
@@ -69,6 +73,26 @@ export default async function handler(
     if (error) {
       console.error("Supabase error:", error)
       return res.status(500).json({ error: "Database error" })
+    }
+
+    // 🚀 SEND EMAIL (NEW ADDITION)
+    try {
+      await resend.emails.send({
+        from: "Hospinovus <onboarding@resend.dev>",
+        to: ["hospinovus@gmail.com"], // 🔥 replace if needed
+        subject: "🚨 New Hospital Lead - HOSPINOVUS",
+        html: `
+          <h2>New Lead Received</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Organization:</strong> ${organization}</p>
+          <p><strong>Requirement:</strong> ${message}</p>
+        `,
+      })
+    } catch (emailErr) {
+      console.error("Email error:", emailErr)
+      // ❗ DO NOT FAIL REQUEST if email fails
     }
 
     return res.status(200).json({
