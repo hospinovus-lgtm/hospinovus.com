@@ -5,9 +5,12 @@ import { motion } from "framer-motion"
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
+  const whatsappMessage = `Hello HOSPINOVUS,
+I would like to discuss improving my hospital operations.`
+
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur border-b border-gold/20">
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between h-16">
 
         {/* LOGO */}
@@ -25,17 +28,26 @@ export default function Header() {
 
         {/* DESKTOP NAV */}
         <nav className="hidden md:flex items-center gap-6 text-sm">
+
           <Link to="/" className="hover:text-gold transition">Home</Link>
-          <Link to="/about" className="hover:text-gold transition">About</Link>
           <Link to="/services" className="hover:text-gold transition">Services</Link>
           <Link to="/contact" className="hover:text-gold transition">Contact</Link>
 
-          {/* CTA */}
+          {/* 🔥 WHATSAPP QUICK ACTION */}
+          <a
+            href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+            target="_blank"
+            className="text-green-400 font-medium hover:underline"
+          >
+            WhatsApp
+          </a>
+
+          {/* 🔥 PRIMARY CTA */}
           <Link
             to="/contact"
-            className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:shadow-[0_0_15px_rgba(255,215,0,0.5)] transition"
+            className="bg-gold text-black px-5 py-2 rounded-lg font-semibold hover:shadow-[0_0_15px_rgba(255,215,0,0.5)] transition"
           >
-            Book Consultation
+            Get Audit-Ready →
           </Link>
         </nav>
 
@@ -57,6 +69,7 @@ export default function Header() {
           exit={{ x: "100%" }}
           className="fixed top-0 right-0 w-3/4 h-full bg-black p-6 flex flex-col gap-6 text-lg z-50"
         >
+
           <button
             className="text-right text-2xl text-gold"
             onClick={() => setMenuOpen(false)}
@@ -65,17 +78,27 @@ export default function Header() {
           </button>
 
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
           <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
           <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
 
+          {/* 🔥 WHATSAPP */}
+          <a
+            href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
+            target="_blank"
+            className="bg-green-500 text-white px-4 py-3 rounded-lg text-center font-medium"
+          >
+            Chat on WhatsApp
+          </a>
+
+          {/* 🔥 PRIMARY CTA */}
           <Link
             to="/contact"
             onClick={() => setMenuOpen(false)}
-            className="bg-gold text-black px-4 py-2 rounded-lg text-center"
+            className="bg-gold text-black px-4 py-3 rounded-lg text-center font-semibold"
           >
-            Book Consultation
+            Get Audit-Ready →
           </Link>
+
         </motion.div>
       )}
 
