@@ -26,7 +26,7 @@ export default function Contact() {
   const [status, setStatus] = useState<"" | "success" | "error">("")
   const [loading, setLoading] = useState(false)
 
-  // PREFILL FROM SERVICE
+  // PREFILL
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const service = params.get("service")
@@ -34,7 +34,7 @@ export default function Contact() {
     if (service) {
       setFormData((prev) => ({
         ...prev,
-        message: `I'm interested in ${service} service. Please contact me.`,
+        message: `I need help with ${service}. Please guide me.`,
       }))
     }
   }, [location])
@@ -47,7 +47,6 @@ export default function Contact() {
       [e.target.name]: e.target.value,
     })
 
-    // 🔥 CLEAR ERROR ON CHANGE
     setErrors((prev) => ({
       ...prev,
       [e.target.name]: "",
@@ -66,16 +65,13 @@ export default function Contact() {
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       })
 
       const data = await res.json()
 
       if (!res.ok) {
-        // 🔥 SHOW FIELD ERRORS
         setErrors(data.errors || {})
         setStatus("error")
         return
@@ -111,16 +107,25 @@ Requirement: ${formData.message}`
     <div className="bg-black text-white pt-28 pb-20 px-4 md:px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
 
-        {/* LEFT */}
+        {/* 🔥 LEFT SIDE */}
         <div>
           <h1 className="text-3xl md:text-5xl font-bold text-gold mb-6">
-            Book a Free Consultation
+            Let’s Fix What’s Slowing Your Hospital Down
           </h1>
 
-          <p className="text-gray-400 mb-8">
-            Let’s improve your hospital operations, achieve NABH accreditation, and drive sustainable growth.
+          <p className="text-gray-400 mb-6">
+            Whether you're facing NABH delays, discharge inefficiencies, or low patient flow —
+            we help you identify the exact gaps and implement solutions that work.
           </p>
 
+          {/* 🔥 PAIN TRIGGERS */}
+          <div className="text-gray-300 text-sm space-y-2 mb-8">
+            <p>✔ Struggling with NABH compliance?</p>
+            <p>✔ Discharge delays affecting patient experience?</p>
+            <p>✔ Operations not running smoothly?</p>
+          </div>
+
+          {/* 🔥 CONTACT OPTIONS */}
           <div className="space-y-4 text-gray-300">
             <a href="tel:+918330016037" className="block hover:text-gold">
               📞 +91 83300 16037
@@ -134,7 +139,7 @@ Requirement: ${formData.message}`
           </div>
         </div>
 
-        {/* FORM */}
+        {/* 🔥 FORM */}
         <motion.form
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -142,76 +147,67 @@ Requirement: ${formData.message}`
           className="space-y-4"
         >
 
-          {/* NAME */}
-          <div>
-            <input
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
-            />
-            {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
-          </div>
+          <input
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+          />
+          {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
 
-          {/* EMAIL */}
-          <div>
-            <input
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
-            />
-            {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
-          </div>
+          <input
+            name="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+          />
+          {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
 
-          {/* PHONE */}
-          <div>
-            <input
-              name="phone"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
-            />
-            {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
-          </div>
+          <input
+            name="phone"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+          />
+          {errors.phone && <p className="text-red-400 text-sm">{errors.phone}</p>}
 
-          {/* ORGANIZATION */}
-          <div>
-            <input
-              name="organization"
-              placeholder="Hospital / Organization"
-              value={formData.organization}
-              onChange={handleChange}
-              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
-            />
-            {errors.organization && <p className="text-red-400 text-sm mt-1">{errors.organization}</p>}
-          </div>
+          <input
+            name="organization"
+            placeholder="Hospital / Organization"
+            value={formData.organization}
+            onChange={handleChange}
+            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+          />
+          {errors.organization && <p className="text-red-400 text-sm">{errors.organization}</p>}
 
-          {/* MESSAGE */}
-          <div>
-            <textarea
-              name="message"
-              placeholder="Tell us your requirement"
-              rows={4}
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
-            />
-            {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
-          </div>
+          <textarea
+            name="message"
+            placeholder="Briefly describe your problem (e.g., NABH delay, discharge issue)"
+            rows={4}
+            value={formData.message}
+            onChange={handleChange}
+            className="w-full p-3 bg-zinc-900 rounded-lg border border-gold/20"
+          />
+          {errors.message && <p className="text-red-400 text-sm">{errors.message}</p>}
 
+          {/* 🔥 CTA */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gold text-black py-3 rounded-lg"
+            className="w-full bg-gold text-black py-3 rounded-lg font-semibold"
           >
-            {loading ? "Submitting..." : "Book Free Consultation"}
+            {loading ? "Submitting..." : "Get Clear Action Plan →"}
           </button>
 
-          {/* STATUS */}
+          {/* 🔥 TRUST */}
+          <p className="text-gray-500 text-xs text-center">
+            No spam. Just a structured response to your hospital’s needs.
+          </p>
+
+          {/* SUCCESS */}
           {status === "success" && (
             <div className="mt-6 p-4 border rounded-lg text-center space-y-3">
               <p className="text-green-400">✅ Request submitted successfully</p>
