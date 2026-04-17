@@ -64,7 +64,7 @@ Please guide me on next steps.`
             to={`/contact?service=${service.slug}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium inline-block"
           >
-            Book Consultation →
+            BOOK NABH READINESS ASSESSMENT →
           </Link>
         </div>
 
@@ -153,7 +153,7 @@ Please guide me on next steps.`
             to={`/contact?service=${service.slug}`}
             className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
           >
-            Book Consultation →
+            BOOK NABH READINESS ASSESSMENT →
           </Link>
         </div>
 
@@ -166,7 +166,7 @@ Please guide me on next steps.`
           to={`/contact?service=${service.slug}`}
           className="bg-gold text-black px-4 py-2 rounded-lg text-sm"
         >
-          Get Started →
+          BOOK NABH READINESS ASSESSMENT
         </Link>
       </div>
 
