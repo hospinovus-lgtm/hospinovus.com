@@ -3,6 +3,7 @@ import Header from "./components/Header"
 import Hero from "./components/Hero"
 import Services from "./components/Services"
 import ServicesPage from "./pages/ServicesPage"
+import ServiceDetail from "./pages/ServiceDetail"
 
 function Home() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/services/:slug" element={<ServiceDetail />} />
       </Routes>
     </>
   )

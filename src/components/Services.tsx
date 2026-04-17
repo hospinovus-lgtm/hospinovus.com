@@ -4,6 +4,7 @@ import { FaHospital, FaChartLine, FaUserTie, FaAward } from "react-icons/fa"
 
 const services = [
   {
+    slug: "nabh",
     icon: <FaAward size={26} />,
     title: "NABH Accreditation & Compliance",
     description:
@@ -15,6 +16,7 @@ const services = [
     ],
   },
   {
+    slug: "operations",
     icon: <FaHospital size={26} />,
     title: "Hospital Operations Optimization",
     description:
@@ -26,6 +28,7 @@ const services = [
     ],
   },
   {
+    slug: "growth",
     icon: <FaChartLine size={26} />,
     title: "Healthcare Business Growth",
     description:
@@ -37,6 +40,7 @@ const services = [
     ],
   },
   {
+    slug: "recruitment",
     icon: <FaUserTie size={26} />,
     title: "Healthcare Workforce Recruitment",
     description:
@@ -65,14 +69,14 @@ export default function Services() {
         </div>
 
         {/* SERVICES GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
 
-          {services.map((service, index) => (
+          {services.map((service) => (
             <motion.div
-              key={index}
+              key={service.slug}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5 }}
               className="border border-gold/20 rounded-2xl p-6 bg-gradient-to-br from-black to-[#1a1a1a] hover:border-gold/40 transition"
             >
               {/* ICON */}
@@ -88,7 +92,7 @@ export default function Services() {
                 {service.description}
               </p>
 
-              {/* BULLET POINTS */}
+              {/* BULLETS */}
               <ul className="text-gray-300 text-sm mb-6 space-y-1">
                 {service.points.map((point, i) => (
                   <li key={i}>• {point}</li>
@@ -97,8 +101,10 @@ export default function Services() {
 
               {/* CTA */}
               <div className="flex gap-4 items-center">
+
+                {/* 🔥 NOW DYNAMIC */}
                 <Link
-                  to="/services"
+                  to={`/services/${service.slug}`}
                   className="text-gold text-sm hover:underline"
                 >
                   View Details →
@@ -110,6 +116,7 @@ export default function Services() {
                 >
                   Consult Now →
                 </Link>
+
               </div>
             </motion.div>
           ))}
