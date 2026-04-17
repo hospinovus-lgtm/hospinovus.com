@@ -7,13 +7,16 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur border-b border-gold/20">
+      
       <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between h-16">
 
         {/* LOGO */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center text-black font-bold">
-            HNS
-          </div>
+        <Link to="/" className="flex items-center gap-3">
+          <img 
+            src="/logo.png" 
+            alt="HOSPINOVUS Logo" 
+            className="w-10 h-10 object-contain"
+          />
           <div className="leading-tight">
             <p className="text-gold font-semibold text-sm">HOSPINOVUS</p>
             <p className="text-[10px] text-gray-400">YOU OWN WE MANAGE</p>
@@ -39,7 +42,7 @@ export default function Header() {
         {/* MOBILE MENU BUTTON */}
         <button
           className="md:hidden text-gold text-2xl"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen(true)}
         >
           ☰
         </button>
@@ -52,7 +55,7 @@ export default function Header() {
           initial={{ x: "100%" }}
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
-          className="fixed top-0 right-0 w-3/4 h-full bg-black p-6 flex flex-col gap-6 text-lg"
+          className="fixed top-0 right-0 w-3/4 h-full bg-black p-6 flex flex-col gap-6 text-lg z-50"
         >
           <button
             className="text-right text-2xl text-gold"
@@ -75,6 +78,7 @@ export default function Header() {
           </Link>
         </motion.div>
       )}
+
     </header>
   )
 }
