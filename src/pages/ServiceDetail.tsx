@@ -19,26 +19,47 @@ export default function ServiceDetail() {
       <div className="max-w-5xl mx-auto space-y-16">
 
         {/* HERO */}
-        <div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gold mb-4">
-            {service.title}
-          </h1>
-          <p className="text-gray-400">
-            {service.subtitle}
-          </p>
-        </div>
+<div className="space-y-6">
 
-        {/* PROBLEMS */}
-        {service.problems && (
-          <div>
-            <h2 className="text-2xl text-gold mb-4">Common Challenges</h2>
-            <ul className="space-y-2 text-gray-300">
-              {service.problems.map((p, i) => (
-                <li key={i}>• {p}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+  {/* SMALL TAG (POSITIONING) */}
+  <p className="text-sm text-gold uppercase tracking-wide">
+    NABH Accreditation Consulting — Kerala
+  </p>
+
+  {/* HEADLINE */}
+  <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+    Struggling with NABH Compliance?
+    <br />
+    <span className="text-gold">
+      We Take Your Hospital to Audit-Ready — Without Chaos
+    </span>
+  </h1>
+
+  {/* SUBTEXT */}
+  <p className="text-gray-400 max-w-2xl">
+    From incomplete documentation to audit anxiety, we step in and build a
+    structured, department-wise system that prepares your hospital for NABH
+    certification with clarity and control.
+  </p>
+
+  {/* QUICK TRUST SIGNALS */}
+  <div className="flex flex-wrap gap-4 text-sm text-gray-300">
+    <span>✔ Structured implementation</span>
+    <span>✔ Department-level execution</span>
+    <span>✔ Audit-focused approach</span>
+  </div>
+
+  {/* CTA */}
+  <div className="pt-4">
+    <Link
+      to={`/contact?service=${service.slug}`}
+      className="bg-gold text-black px-8 py-3 rounded-lg font-medium"
+    >
+      Book NABH Readiness Assessment →
+    </Link>
+  </div>
+
+</div>
 
         {/* PROCESS */}
         {service.process && (
