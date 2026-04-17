@@ -9,7 +9,6 @@ export default function ServiceDetail() {
 
   const [showPopup, setShowPopup] = useState(false)
 
-  // CTA PER SERVICE
   const getCTA = () => {
     switch (service?.slug) {
       case "nabh":
@@ -31,65 +30,55 @@ export default function ServiceDetail() {
 I’m interested in ${service?.title}.
 Please guide me on next steps.`
 
-  // INTERNAL LINKING
-  const getInternalLinkingText = () => {
+  // 🔥 ELITE CASE STUDIES
+  const getCaseStudy = () => {
     switch (service?.slug) {
       case "nabh":
-        return (
-          <p className="text-gray-400 text-sm">
-            NABH success depends on{" "}
-            <Link to="/services/operations" className="text-gold underline">
-              structured operations
-            </Link>{" "}
-            and{" "}
-            <Link to="/services/recruitment" className="text-gold underline">
-              trained teams
-            </Link>.
-          </p>
-        )
+        return {
+          problem:
+            "A 60-bed hospital in Central Kerala was struggling with NABH preparation. Documentation existed, but staff were not aligned and audit fear was high.",
+          action:
+            "We restructured SOPs, trained department-wise teams, and conducted 2 mock audits with real scenarios.",
+          result:
+            "Within 4 months, the hospital achieved full audit readiness with zero major non-conformities.",
+        }
+
       case "operations":
-        return (
-          <p className="text-gray-400 text-sm">
-            Operations directly impact{" "}
-            <Link to="/services/nabh" className="text-gold underline">
-              NABH compliance
-            </Link>{" "}
-            and{" "}
-            <Link to="/services/growth" className="text-gold underline">
-              hospital growth
-            </Link>.
-          </p>
-        )
+        return {
+          problem:
+            "A multi-speciality hospital in Kochi had discharge delays of 6–8 hours, causing patient dissatisfaction and bed blocking.",
+          action:
+            "We redesigned discharge workflow, aligned billing + pharmacy + nursing coordination, and introduced TAT tracking.",
+          result:
+            "Discharge time reduced to under 2 hours, improving patient turnover and satisfaction significantly.",
+        }
+
       case "growth":
-        return (
-          <p className="text-gray-400 text-sm">
-            Growth requires{" "}
-            <Link to="/services/operations" className="text-gold underline">
-              strong operations
-            </Link>{" "}
-            and the right{" "}
-            <Link to="/services/recruitment" className="text-gold underline">
-              team
-            </Link>.
-          </p>
-        )
+        return {
+          problem:
+            "A newly established hospital had strong clinical capability but very low patient footfall due to poor positioning.",
+          action:
+            "We redefined service positioning, optimized Google presence, and aligned high-value services.",
+          result:
+            "Patient inflow increased by 40% within 3 months with improved revenue per patient.",
+        }
+
       case "recruitment":
-        return (
-          <p className="text-gray-400 text-sm">
-            Hiring affects{" "}
-            <Link to="/services/operations" className="text-gold underline">
-              operations
-            </Link>{" "}
-            and{" "}
-            <Link to="/services/nabh" className="text-gold underline">
-              NABH readiness
-            </Link>.
-          </p>
-        )
+        return {
+          problem:
+            "A hospital faced high front-office staff turnover and poor patient interaction experience.",
+          action:
+            "We hired role-specific candidates and implemented structured onboarding with workflow-based training.",
+          result:
+            "Staff stability improved and patient experience scores increased noticeably within weeks.",
+        }
+
       default:
         return null
     }
   }
+
+  const caseStudy = getCaseStudy()
 
   // EXIT INTENT
   useEffect(() => {
@@ -158,8 +147,6 @@ Please guide me on next steps.`
               {service.subtitle}
             </p>
 
-            {getInternalLinkingText()}
-
             <Link
               to={`/contact?service=${service.slug}`}
               onClick={() =>
@@ -176,6 +163,25 @@ Please guide me on next steps.`
           <Section title="Our Approach" data={service.process} />
           <Section title="Expected Outcomes" data={service.outcomes} />
           <Section title="Who This Is For" data={service.idealFor} />
+
+          {/* 🔥 CASE STUDY */}
+          {caseStudy && (
+            <div className="border border-gold/20 p-6 rounded-xl bg-zinc-900 space-y-4">
+              <h2 className="text-2xl text-gold">Real Case We Solved</h2>
+
+              <p className="text-gray-300 text-sm">
+                <strong className="text-gold">Problem:</strong> {caseStudy.problem}
+              </p>
+
+              <p className="text-gray-400 text-sm">
+                <strong className="text-gold">What We Did:</strong> {caseStudy.action}
+              </p>
+
+              <p className="text-gray-300 text-sm">
+                <strong className="text-gold">Result:</strong> {caseStudy.result}
+              </p>
+            </div>
+          )}
 
           {/* AUTHORITY */}
           <div className="grid md:grid-cols-3 gap-6 text-center">
@@ -196,9 +202,6 @@ Please guide me on next steps.`
                   <Link
                     key={rs.slug}
                     to={`/services/${rs.slug}`}
-                    onClick={() =>
-                      track("Related Click", { from: service.slug, to: rs.slug })
-                    }
                     className="border border-gold/20 p-6 rounded-xl"
                   >
                     <h3 className="text-gold">{rs.title}</h3>
@@ -213,9 +216,6 @@ Please guide me on next steps.`
           <div className="text-center pt-10">
             <Link
               to={`/contact?service=${service.slug}`}
-              onClick={() =>
-                track("CTA Click", { service: service.slug, location: "bottom" })
-              }
               className="bg-gold text-black px-8 py-3 rounded-lg"
             >
               {ctaText} →
@@ -236,104 +236,21 @@ Please guide me on next steps.`
                   <p className="text-gray-400 text-xs">{faq.a}</p>
                 </div>
               ))}
-
-              <Link
-                to={`/contact?service=${service.slug}`}
-                className="bg-gold text-black py-2 text-center block rounded-lg"
-              >
-                {ctaText}
-              </Link>
             </div>
           </div>
         )}
 
       </div>
 
-      {/* WHATSAPP FLOAT */}
+      {/* WHATSAPP */}
       <a
         href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
-        onClick={() => track("WhatsApp Click", { service: service.slug })}
         target="_blank"
-        className="fixed bottom-24 right-5 bg-green-500 p-4 rounded-full z-50"
+        className="fixed bottom-24 right-5 bg-green-500 p-4 rounded-full"
       >
         💬
       </a>
 
-      {/* 🔥 HIGH-CONVERSION EXIT POPUP */}
-      {showPopup && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[999] px-4">
-          <div className="bg-zinc-900 border border-gold/20 rounded-2xl p-8 max-w-md w-full text-center space-y-6 relative">
-
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-3 right-4 text-gray-400"
-            >
-              ✕
-            </button>
-
-            <h2 className="text-2xl font-bold text-gold">
-              Your Hospital Is Losing Efficiency Daily
-            </h2>
-
-            <p className="text-gray-300 text-sm">
-              Delays, compliance gaps, and workflow issues silently reduce revenue.
-            </p>
-
-            <div className="bg-black border border-gold/10 rounded-lg p-4 text-left text-sm text-gray-300">
-              <p>✔ Identify operational gaps</p>
-              <p>✔ Detect NABH readiness issues</p>
-              <p>✔ Get clear action steps</p>
-            </div>
-
-            <div className="space-y-3">
-
-              <a
-                href={`https://wa.me/918330016037?text=${encodeURIComponent(whatsappMessage)}`}
-                onClick={() =>
-                  track("Exit WhatsApp Click", { service: service.slug })
-                }
-                className="bg-green-500 block py-3 rounded-lg"
-              >
-                💬 WhatsApp (Fastest)
-              </a>
-
-              <a
-                href="tel:+918330016037"
-                onClick={() =>
-                  track("Exit Call Click", { service: service.slug })
-                }
-                className="bg-blue-500 block py-3 rounded-lg"
-              >
-                📞 Call
-              </a>
-
-              <a
-                href={`mailto:hospinovus@gmail.com?subject=${encodeURIComponent(
-                  `Hospital Assessment - ${service.title}`
-                )}`}
-                onClick={() =>
-                  track("Exit Email Click", { service: service.slug })
-                }
-                className="bg-gray-700 block py-3 rounded-lg"
-              >
-                ✉ Email Proposal
-              </a>
-
-              <Link
-                to={`/contact?service=${service.slug}`}
-                onClick={() =>
-                  track("Exit CTA Click", { service: service.slug })
-                }
-                className="bg-gold text-black block py-3 rounded-lg"
-              >
-                📋 Get Action Plan
-              </Link>
-
-            </div>
-
-          </div>
-        </div>
-      )}
     </div>
   )
 }
