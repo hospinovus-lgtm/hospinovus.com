@@ -1,6 +1,6 @@
-<SplashScreen />
 import { Routes, Route, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
+
 import SplashScreen from "./components/SplashScreen"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
@@ -29,8 +29,13 @@ export default function App() {
 
   return (
     <>
+      {/* 🔥 BRAND SPLASH (TOP PRIORITY) */}
+      <SplashScreen />
+
+      {/* 🔥 GLOBAL COMPONENTS */}
       <Header />
       <ScrollToTop />
+      <PageLoader />
 
       {/* 🔥 PAGE TRANSITIONS */}
       <AnimatePresence mode="wait">
@@ -61,6 +66,7 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
 
+      {/* 🔥 FOOTER + ANALYTICS */}
       <Footer />
       <Analytics />
     </>
