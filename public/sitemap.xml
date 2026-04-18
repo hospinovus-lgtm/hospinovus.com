@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://hospinovus.vercel.app/</loc>
+  </url>
+
+  <url>
+    <loc>https://hospinovus.vercel.app/about</loc>
+  </url>
+
+  <url>
+    <loc>https://hospinovus.vercel.app/services</loc>
+  </url>
+
+  <url>
+    <loc>https://hospinovus.vercel.app/services/nabh</loc>
+  </url>
+
+  <url>
+    <loc>https://hospinovus.vercel.app/services/operations</loc>
+  </url>
+
+  <url>
+    <loc>https://hospinovus.vercel.app/services/growth</loc>
+  </url>
+
+  <url>
+    <loc>https://hospinovus.vercel.app/services/recruitment</loc>
+  </url>
+
+  <url>
+    <loc>https://hospinovus.vercel.app/contact</loc>
+  </url>
+
+</urlset>
